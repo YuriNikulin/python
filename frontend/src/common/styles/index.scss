@@ -1,0 +1,9 @@
+@import './reset.css';
+@import '~bootstrap/dist/css/bootstrap.min.css';
+@import './typography.scss';
+@import './common.scss';
+
+* {
+    margin: 0;
+    padding: 0;
+}

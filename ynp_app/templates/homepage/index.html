@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" href={% static 'homepage/styles/index.css' %} />
+{% endblock %}
+{% block title %}Юрий Никулин, Python{% endblock %}
+
+
+{% block content %}
+{% comment %} <pre>{% filter force_escape %}{% debug %}{% endfilter %}</pre> {% endcomment %}
+    <div class="container">
+        <div class="row">
+            <div class="py-5">
+                <h3 class="title text-center">
+                    Примеры моих работ
+                </h3>
+                <div>
+                    {% for app in applications_list %}
+                        <div>
+                            <h5>
+                                {{app.name}}
+                            </h5>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts%}
+    <script src="{% static 'homepage/js/index.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,25 @@
+.header .logo {
+    text-transform: uppercase;
+    margin-bottom: 0;
+
+    &-link {
+        color: $body-color;
+        text-decoration: none;
+
+        &:hover {
+            color: $red-300;
+
+            span {
+                color: $red-600;
+            }
+        }
+    }
+}
+
+.link-reset {
+    text-decoration: none;
+
+    &, &:hover {
+        color: $body-color;
+    }
+}
