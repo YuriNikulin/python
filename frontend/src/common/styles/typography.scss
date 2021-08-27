@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700&display=swap');
+@import './variables.scss';
+
+html {
+    font-size: 16px;
+}
+
+body {
+    font-family: $font-family;
+    font-size: $font-size-1;
+}
+
+.title {
+    text-transform: uppercase;
+}

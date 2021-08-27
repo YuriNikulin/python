@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+    {% comment %} <link rel="stylesheet" href={% static 'homepage/styles/index.css' %} /> {% endcomment %}
+{% endblock %}
+{% block title %}Калькулятор{% endblock %}
+
+{% block content %}
+    Калькулятор
+{% endblock %}
+
+{% block scripts%}
+    <script src="{% static 'app_calculator/js/index.js' %}"></script>
+{% endblock %}

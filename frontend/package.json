@@ -1,0 +1,23 @@
+{
+  "name": "ynp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack --mode=development",
+    "build": "webpack --mode=production"
+  },
+  "author": "Yuriy Nikulin",
+  "license": "MIT",
+  "devDependencies": {
+    "css-loader": "^6.2.0",
+    "sass": "^1.38.1",
+    "sass-loader": "^12.1.0",
+    "style-loader": "^3.2.1",
+    "webpack": "^5.51.1",
+    "webpack-cli": "^4.8.0"
+  },
+  "dependencies": {
+    "bootstrap": "^5.1.0"
+  }
+}
