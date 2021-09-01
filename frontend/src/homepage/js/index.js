@@ -1,1 +1,1 @@
-console.log('homepage')
+import '../styles/index.scss'

@@ -1,3 +1,7 @@
+body {
+    overflow-y: scroll;
+}
+
 .header .logo {
     text-transform: uppercase;
     margin-bottom: 0;
@@ -22,4 +26,19 @@
     &, &:hover {
         color: $body-color;
     }
+}
+
+.main-preloader {
+    position: absolute;
+    height: 100vh;
+    width: 100%;
+    background: #fff;
+    z-index: 1000;
+}
+
+.preloader {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }

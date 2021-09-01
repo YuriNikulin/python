@@ -10,16 +10,19 @@
     <link rel="stylesheet" href="{% static 'common/styles/base.css' %}" /> {% endcomment %}
     {% block head %} {% endblock %}
     <title>{% block title %} {% endblock %}</title>
+    {% include "preloader-script.html" %}
 </head>
 <body>
-    <div class="main-wrapper">
+    <div class="main-preloader" style="opacity: 1; transition: .3s ease-in-out opacity; display: none;">
+        {% include "preloader.html" %}
+    </div>
+    <div class="main-wrapper" style="display: none;">
         <header class="header py-3">
             <div class="header-content container">
                 <div class="row">
                     <a href="/" class="logo-link link-reset">
                         <h1 class="logo">
                             YNPyth<span>on</span>
-                            {% comment %} <embed/ src="{% static 'common/img/py_logo.svg' %}" /> {% endcomment %}
                         </h1>
                     </a>
                 </div>

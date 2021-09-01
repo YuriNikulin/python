@@ -1,0 +1,36 @@
+<script>
+    var minDuration = 300
+    var windowLoaded = false
+    var fontsLoaded = false
+    var minimumDurationFlag = false
+
+    function revealContent() {
+        if (!minimumDurationFlag || !windowLoaded || !fontsLoaded) {
+            return
+        }
+        var mainWrapper = document.querySelector('.main-wrapper')
+        var preloader = document.querySelector('.main-preloader')
+        mainWrapper.style.display = 'block'
+        preloader.style.opacity = 0;
+        setTimeout(() => {
+            preloader.parentElement.removeChild(preloader)
+        }, 300)
+    }
+
+    window.addEventListener('load', () => {
+        var preloader = document.querySelector('.main-preloader')
+        preloader.style.display = 'block'
+        windowLoaded = true
+        revealContent()
+    })
+
+    document.fonts.ready.then(function() {
+        fontsLoaded = true
+        revealContent()
+    })
+
+    setTimeout(function() {
+        minimumDurationFlag = true
+        revealContent()
+    }, minDuration)
+</script>

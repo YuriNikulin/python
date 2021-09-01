@@ -28,6 +28,12 @@ module.exports = (_, options) => {
             "sass-loader",
           ],
         },
+        {
+          test: /\.svg$/,
+          use: [
+            "svg-inline-loader"
+          ]
+        }
       ],
     },
     watch: options.mode === 'development'
