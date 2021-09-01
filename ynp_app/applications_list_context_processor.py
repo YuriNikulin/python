@@ -12,7 +12,7 @@ def applications_list(request):
                     Простой калькулятор, умеющий выполнять простые арифметические действия:\
                     сложение, вычитание, умножение, деление. Понимает скобки. Не использует eval.\
                 ",
-                "bg_img_src": 'homepage/img/app_calculator_3.jpg',
+                "bg_img_src": 'homepage/img/app_calculator.jpg',
                 "app_name": routes.ROUTE_APP_CALCULATOR['name'],
                 "source_link": "https://github.com/YuriNikulin/python/blob/master/ynp_app/applications/calculator.py"
             },
@@ -22,7 +22,7 @@ def applications_list(request):
                 "description": "\
                     Приложение умеет генерировать псевдослучайный текст на основе введённого текста.\
                 ",
-                "bg_img_src": 'homepage/img/app_text_generator3.jpg',
+                "bg_img_src": 'homepage/img/app_text_generator.jpg',
                 "app_name": routes.ROUTE_APP_CALCULATOR['name'],
                 "technologies": [
                     {

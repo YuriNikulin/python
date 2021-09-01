@@ -1,7 +1,7 @@
 from django.urls import path
 from . import routes
 from . import views
-from . import controller_calculator
+from ynp_app.controllers import controller_calculator
 
 urlpatterns = [
     path('', views.index, name='index'),
