@@ -7,9 +7,7 @@ from ynp_app.applications.calculator import main
 
 
 def index(request):
-    return render(request, 'app_calculator/index.html', context={
-        'foo': 'bar'
-    })
+    return render(request, 'app_calculator/index.html')
 
 def calculate(request):
     response_data = 0

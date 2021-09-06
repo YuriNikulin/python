@@ -1,25 +1,35 @@
 <script>
     var minDuration = 300
+    var maxDuration = 4000
     var windowLoaded = false
     var fontsLoaded = false
     var minimumDurationFlag = false
+    var isLoaded = false;
 
-    function revealContent() {
-        if (!minimumDurationFlag || !windowLoaded || !fontsLoaded) {
+    function showPreloader() {
+        var preloader = document.querySelector('.main-preloader')
+        if (preloader) {
+            preloader.style.display = 'block'
+        }
+    }
+
+    function revealContent(force) {
+        if (!force && (!minimumDurationFlag || !windowLoaded || !fontsLoaded)) {
             return
         }
         var mainWrapper = document.querySelector('.main-wrapper')
         var preloader = document.querySelector('.main-preloader')
         mainWrapper.style.display = 'block'
         preloader.style.opacity = 0;
+        isLoaded = true
         setTimeout(() => {
             preloader.parentElement.removeChild(preloader)
         }, 300)
     }
 
+    document.addEventListener('DOMContentLoaded', showPreloader)
+
     window.addEventListener('load', () => {
-        var preloader = document.querySelector('.main-preloader')
-        preloader.style.display = 'block'
         windowLoaded = true
         revealContent()
     })
@@ -33,4 +43,10 @@
         minimumDurationFlag = true
         revealContent()
     }, minDuration)
+
+    setTimeout(function() {
+        if (!isLoaded) {
+            revealContent(true)
+        }
+    }, maxDuration)
 </script>

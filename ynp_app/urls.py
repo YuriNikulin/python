@@ -1,10 +1,13 @@
 from django.urls import path
 from . import routes
 from . import views
-from ynp_app.controllers import controller_calculator
+from ynp_app.controllers import controller_calculator, controller_text_generator
 
 urlpatterns = [
     path('', views.index, name='index'),
     path('app/calculator', controller_calculator.index, name=routes.ROUTE_APP_CALCULATOR['name']),
     path('api/calculator/calculate', controller_calculator.calculate),
+
+    path('app/text_generator', controller_text_generator.index, name=routes.ROUTE_APP_TEXT_GENERATOR['name']),
+    path('api/text_generator/generate', controller_text_generator.generate),
 ]

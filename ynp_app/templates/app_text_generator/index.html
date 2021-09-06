@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+    
+{% endblock %}
+{% block title %}Генератор случайного текста{% endblock %}
+
+{% block content %}
+    {% csrf_token %}
+    <div class="container" id="text-generator">
+        <div class="row mb-4">
+            <h3 class="title text-center">
+                Генератор случайного текста
+            </h3>
+        </div>
+        <div class="row">
+            <p>
+                Текст будет сгенерирован на основе загруженного вами текста.<br />
+                Загрузите файл в формате .txt, вставьте файл в текстовое поле либо выберите существующий файл.
+            </p>
+            <div>
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="tg-select-file-tab" data-bs-toggle="tab" data-bs-target="#tg-select-file" type="button" role="tab" aria-controls="tg-select-file" data-tg-type="file" aria-selected="true">Загрузить файл</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="tg-select-text-tab" data-bs-toggle="tab" data-bs-target="#tg-select-text" type="button" role="tab" aria-controls="tg-select-text" data-tg-type="text" aria-selected="false">Вставить текст</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="tg-select-text-tab" data-bs-toggle="tab" data-bs-target="#tg-select-example" type="button" role="tab" aria-controls="tg-select-example" data-tg-type="example" aria-selected="false">Выбрать готовый текст</button>
+                    </li>
+                </ul>
+                <div class="tab-content py-2" id="myTabContent">
+                    <div class="tab-pane fade show active" id="tg-select-file" role="tabpanel" aria-labelledby="tg-select-file">
+                        <div class="form-group">
+                            <label for="tg-input-file">Выберите или перетащите файл</label>
+                            <div>
+                                <input type="file" class="form-control-file" id="tg-input-file" accept="text/plain">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade show" id="tg-select-text" role="tabpanel" aria-labelledby="tg-select-text">
+                        <div class="form-group">
+                            <label for="tg-input-text">Введите текст</label>
+                            <textarea class="form-control" rows=5 id="tg-input-text"></textarea>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade show" id="tg-select-example" role="tabpanel" aria-labelledby="tg-select-example">
+                        <div class="row">
+                            <div class="form-group" style="width: 400px;">
+                            <label>Выберите текст</label>
+                            <select class="form-select" value={{example_files.0.id}}>
+                                {% for example in examples_files %}
+                                    <option value={{example.id}}>
+                                        {{ example.name }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div style="width: 400px;">
+                <label for="tg-sequences-count" class="d-block">Количество предложений, которое нужно сгенерировать</label>
+                <input id="tg-sequences-count" class="form-control" type="number" value="10" step="5" max="100" min="5" />
+            </div>
+            <div class="mt-4">
+                <button class="btn btn-primary btn-lg" disabled id="tg-submit">
+                    Сгенерировать текст
+                </button>
+            </div>
+        </div>
+        <div class="row mt-5 mb-5">
+            <p id="tg-result" style="width: 620px; margin: 0 auto; text-align: justify;">
+            </p>
+        </div>
+        
+    </div>
+{% endblock %}
+
+{% block scripts%}
+    <script src="{% static 'app_text_generator/js/index.js' %}"></script>
+{% endblock %}

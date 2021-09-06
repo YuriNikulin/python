@@ -23,7 +23,7 @@ def applications_list(request):
                     Приложение умеет генерировать псевдослучайный текст на основе введённого текста.\
                 ",
                 "bg_img_src": 'homepage/img/app_text_generator.jpg',
-                "app_name": routes.ROUTE_APP_CALCULATOR['name'],
+                "app_name": routes.ROUTE_APP_TEXT_GENERATOR['name'],
                 "technologies": [
                     {
                         "name": 'nltk'

@@ -16,7 +16,11 @@ module.exports = (_, options) => {
       app_calculator: {
           import: './src/app_calculator/js/index.js',
           filename: getOutputPath('app_calculator')
-      }
+      },
+      app_text_generator: {
+        import: './src/app_text_generator/js/index.js',
+        filename: getOutputPath('app_text_generator')
+    }
     },
     module: {
       rules: [
@@ -35,6 +39,11 @@ module.exports = (_, options) => {
           ]
         }
       ],
+    },
+    resolve: {
+      alias: {
+        common: path.resolve(__dirname, 'src/common/js')
+      }
     },
     watch: options.mode === 'development'
   };
