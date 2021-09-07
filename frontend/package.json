@@ -10,7 +10,17 @@
   "author": "Yuriy Nikulin",
   "license": "MIT",
   "devDependencies": {
+    "@babel/core": "^7.15.5",
+    "@babel/plugin-transform-runtime": "^7.15.0",
+    "@babel/preset-env": "^7.15.4",
+    "@babel/preset-react": "^7.14.5",
+    "babel-eslint": "^10.1.0",
+    "babel-loader": "^8.2.2",
+    "babel-plugin-transform-runtime": "^6.23.0",
     "css-loader": "^6.2.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "jsx-loader": "^0.13.2",
+    "prop-types": "^15.7.2",
     "sass": "^1.38.1",
     "sass-loader": "^12.1.0",
     "style-loader": "^3.2.1",
@@ -20,7 +30,11 @@
   },
   "dependencies": {
     "bootstrap": "^5.1.0",
+    "classnames": "^2.3.1",
+    "eslint-loader": "^4.0.2",
     "js-cookie": "^3.0.1",
-    "lodash-es": "^4.17.21"
+    "lodash-es": "^4.17.21",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
   }
 }

@@ -39,7 +39,7 @@ def applications_list(request):
                 ",
                 "source_link": "https://github.com/YuriNikulin/python/blob/master/ynp_app/applications/csv.py",
                 "bg_img_src": 'homepage/img/app_csv_editor.jpg',
-                "app_name": routes.ROUTE_APP_CALCULATOR['name'],
+                "app_name": routes.ROUTE_APP_CSV_EDITOR['name'],
                 "technologies": [
                     {
                         "name": 'pandas'
@@ -57,7 +57,6 @@ def applications_list(request):
                 ],
                 "bg_img_src": 'homepage/img/app_task_tracker.png',
                 "app_name": routes.ROUTE_APP_CALCULATOR['name'],
-
             }
         ],
     }

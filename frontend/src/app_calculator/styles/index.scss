@@ -9,6 +9,7 @@ $gutter: $spacer / 4;
         border: 1px solid $gray-600;
         width: 500px;
         padding: 0;
+        margin-bottom: $spacer * 2;
     }
 
     &-button {

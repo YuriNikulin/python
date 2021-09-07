@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+    
+{% endblock %}
+{% block title %}Генератор случайного текста{% endblock %}
+
+{% block content %}
+    {% csrf_token %}
+    <div class="container" id="csv-editor">
+        <div class="row mb-4">
+            <h3 class="title text-center">
+                CSV/XML редактор
+            </h3>
+        </div>
+
+        <div class="row">
+            <div id="ce-app">
+            </div>
+        </div>
+        
+    </div>
+{% endblock %}
+
+{% block scripts%}
+    <script src="{% static 'app_csv_editor/js/index.js' %}"></script>
+{% endblock %}

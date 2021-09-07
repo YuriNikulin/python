@@ -10,6 +10,16 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./src/common/js/index.js":
+/*!********************************!*\
+  !*** ./src/common/js/index.js ***!
+  \********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _styles_index_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../styles/index.scss */ \"./src/common/styles/index.scss\");\n/* harmony import */ var lodash_es_throttle__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lodash-es/throttle */ \"./node_modules/lodash-es/throttle.js\");\n\n\n\nvar stickyHeader = function stickyHeader() {\n  var header = document.querySelector('.header');\n\n  var checkScroll = function checkScroll(e) {\n    if (window.scrollY) {\n      header.classList.add('stuck');\n    } else {\n      header.classList.remove('stuck');\n    }\n  };\n\n  document.addEventListener('scroll', (0,lodash_es_throttle__WEBPACK_IMPORTED_MODULE_1__.default)(checkScroll, 300));\n};\n\nstickyHeader();\n\n//# sourceURL=webpack://ynp/./src/common/js/index.js?");
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/dist/cjs.js!./node_modules/bootstrap/dist/css/bootstrap.min.css":
 /*!*************************************************************************************************!*\
   !*** ./node_modules/css-loader/dist/cjs.js!./node_modules/bootstrap/dist/css/bootstrap.min.css ***!
@@ -117,16 +127,6 @@ eval("\n\n/* istanbul ignore next  */\nfunction apply(style, options, obj) {\n  
 /***/ ((module) => {
 
 eval("\n\n/* istanbul ignore next  */\nfunction styleTagTransform(css, style) {\n  if (style.styleSheet) {\n    style.styleSheet.cssText = css;\n  } else {\n    while (style.firstChild) {\n      style.removeChild(style.firstChild);\n    }\n\n    style.appendChild(document.createTextNode(css));\n  }\n}\n\nmodule.exports = styleTagTransform;\n\n//# sourceURL=webpack://ynp/./node_modules/style-loader/dist/runtime/styleTagTransform.js?");
-
-/***/ }),
-
-/***/ "./src/common/js/index.js":
-/*!********************************!*\
-  !*** ./src/common/js/index.js ***!
-  \********************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _styles_index_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../styles/index.scss */ \"./src/common/styles/index.scss\");\n/* harmony import */ var lodash_es_throttle__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lodash-es/throttle */ \"./node_modules/lodash-es/throttle.js\");\n\n\n\nconst stickyHeader = () => {\n    const header = document.querySelector('.header')\n\n    const checkScroll = (e) => {\n        if (window.scrollY) {\n            header.classList.add('stuck')\n        } else {\n            header.classList.remove('stuck')\n        }\n    }\n\n    document.addEventListener('scroll', (0,lodash_es_throttle__WEBPACK_IMPORTED_MODULE_1__.default)(checkScroll, 300))\n}\n\nstickyHeader()\n\n//# sourceURL=webpack://ynp/./src/common/js/index.js?");
 
 /***/ }),
 

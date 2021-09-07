@@ -8,3 +8,7 @@ ROUTE_APP_CALCULATOR = {
 ROUTE_APP_TEXT_GENERATOR = {
     "name": "app_text_generator"
 }
+
+ROUTE_APP_CSV_EDITOR = {
+    "name": "app_csv_editor"
+}
