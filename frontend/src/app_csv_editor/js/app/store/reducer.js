@@ -5,7 +5,9 @@ export const initialState = {
 }
 
 export const reducer = (state = initialState, action) => {
-    // console.log(action)
+    if (!action?.type) {
+        return state
+    }
     switch (action.type) {
         case TYPES.ACTION_SET_LOADING:
             return {

@@ -14,7 +14,7 @@ const App = () => {
     const [state, dispatch] = useReducer(reducer, initialState)
 
     const _dispatch = (fn) => {
-        dispatch(fn(state))
+        dispatch(fn(state, dispatch))
     }
 
     return (

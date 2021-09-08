@@ -46,7 +46,7 @@ const makeRequest = async (url, params) => {
           title: 'Ошибка',
           text: params.getErrorNotificationText
             ? params.getErrorNotificationText(_resJson)
-            : _resJson.message || '',
+            : _resJson?.message || '',
         });
       }
       return reject(e);

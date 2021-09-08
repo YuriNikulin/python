@@ -1,21 +1,30 @@
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useCallback, useContext, useEffect, useRef } from 'react';
 import Table from '../Table/Table'
 import Button from 'common/react_components/Button'
+import { useStore } from '../..';
+import { importFile } from '../../store/actions';
 
 const Toolbar = () => {
+    const [state, dispatch] = useStore()
     const fileUploaderRef = useRef()
 
-    const handleFileUploaderButtonClick = () => {
-        if (fileUploaderRef.current) {
-            fileUploaderRef.current.click()
-        }
-    }
+    const handleFileUploaderChange = useCallback((e) => {
+        const file = e.target.files[0]
+        dispatch(importFile(file))
+    }, [])
+
 
     return (
         <div>
-            {/* <Button onClick={handleFileUploaderButtonClick}>Импорт файла */}
-                <input ref={fileUploaderRef} type="file" style={{display: 'block'}} className="ce-file-uploader btn btn-primary" />
-            {/* </Button> */}
+            <Button className="ce-file-uploader-button position-relative">Импорт файла
+                <input
+                    ref={fileUploaderRef}
+                    type="file"
+                    className="ce-file-uploader btn btn-primary"
+                    onChange={handleFileUploaderChange}
+                    accept=".csv, .xls, .xlsx"
+                />
+            </Button>
             <Button className="ms-3">Экспорт файла</Button>
             <Button className="ms-3">Новый документ</Button>
         </div>
