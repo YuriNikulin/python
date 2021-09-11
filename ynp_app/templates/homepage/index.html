@@ -8,19 +8,59 @@
 
 
 {% block content %}
-{% comment %} <pre>{% filter force_escape %}{% debug %}{% endfilter %}</pre> {% endcomment %}
     <div class="container">
         <div class="row">
             <div class="py-5">
-                <h3 class="title text-center">
+                <h3 class="title text-center mb-5">
                     Примеры моих работ
                 </h3>
-                <div>
+                <div class="row">
                     {% for app in applications_list %}
-                        <div>
-                            <h5>
-                                {{app.name}}
-                            </h5>
+                        <div class="col-md-12 col-lg-6 mb-4 d-flex flex-column">
+                            <div class="card flex-grow-1 hp-card">
+                                <div class="card-body d-flex flex-column hp-card-body">
+                                    {% if app.bg_img_src %}
+                                        <img class="hp-card-img" src="{% static app.bg_img_src %}" />
+                                    {% endif %}
+                                    <div class="hp-card-overlay flex-grow-1 d-flex flex-column">
+                                        <a class="title text-center hp-card-header link-reset" href="{% url app.app_name %}" >
+                                            <span class="hp-card-header-title">
+                                                {{app.name}}
+                                            </span>
+                                        </a>
+                                        <a class="pb-5 flex-grow-1 hp-card-description link-reset" href="{% url app.app_name %}">
+                                            {{app.description}}
+                                        </a>
+                                        <footer class="hp-card-footer">
+                                            {% if app.source_link %}
+                                                <div class="mb-3">
+                                                    <span class="title d-block" style="font-size: 0.8rem;">
+                                                        Ссылка на github:
+                                                    </span>
+                                                    <a href="{{app.source_link}}" target="_blank">
+                                                        <img style="width: 14px;" src="{% static 'common/icons/github.svg' %}" />
+                                                        {{app.name}}
+                                                    </a>
+                                                </div>
+                                            {% endif %}
+                                            {% if app.technologies %}
+                                                <div>
+                                                    <span class="title" style="font-size: 0.8rem;">
+                                                        Используемые технологии:
+                                                    </span>
+                                                    <ul>
+                                                        {% for item in app.technologies %}
+                                                            <li>
+                                                                {{item.name}}
+                                                            </li>
+                                                        {% endfor %}
+                                                    </ul>
+                                                </div>
+                                            {% endif %}
+                                        </footer>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     {% endfor %}
                 </div>

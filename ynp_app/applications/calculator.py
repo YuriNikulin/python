@@ -223,24 +223,14 @@ def calculate(chars):
 
     return result_stack[-1]
 
-while True:
-    user_input = input()
+def main(_value):
+    user_input = _value
     should_continue = False
     if not len(user_input):
-        continue
-    if (user_input[0] == '/'):
-        if user_input == '/exit':
-            print('bye')
-            break
-        elif user_input == '/help':
-            print('The program calculates the sum of numbers')
-            continue
-        else:
-            print('Unknown command')
-            continue
+        raise ValueError
 
     if not user_input:
-        continue
+        raise ValueError
 
     assignment_match = re.match(r'(.+)=(.+)', user_input)
     if assignment_match:
@@ -248,11 +238,13 @@ while True:
         assignment = assignment_match[2].strip()
         if not char_is_variable(expression):
             print("Invalid identifier")
+            raise ValueError
 
         _char_is_variable = char_is_variable(assignment)
         _char_is_digit = char_is_digit(assignment)
         if not _char_is_variable and not _char_is_digit:
             print("Invalid assignment")
+            raise ValueError
 
         if _char_is_digit:
             set_variable(expression, assignment)
@@ -270,10 +262,9 @@ while True:
             user_input_postfix = get_postfix(user_input)
             result = calculate(user_input_postfix)
             try:
-                print(round(result) if float(result).is_integer() else result)
+                return round(result) if float(result).is_integer() else result
             except BaseException:
-                print(result)
+                return result
         except BaseException:
             print('Invalid expression')
-
-exit()
+            raise ValueError

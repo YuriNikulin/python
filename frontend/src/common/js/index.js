@@ -1,3 +1,18 @@
-import '../styles/index.scss'
+import '../styles/index.scss';
+import throttle from 'lodash-es/throttle';
 
-console.log('hello world!!!!!')
+const stickyHeader = () => {
+  const header = document.querySelector('.header');
+
+  const checkScroll = (e) => {
+    if (window.scrollY) {
+      header.classList.add('stuck');
+    } else {
+      header.classList.remove('stuck');
+    }
+  };
+
+  document.addEventListener('scroll', throttle(checkScroll, 300));
+};
+
+stickyHeader();

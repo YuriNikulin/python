@@ -1,5 +1,8 @@
 from pathlib import Path
+import mimetypes
 import os
+
+# mimetypes.add_type("images/svg+xml", ".svg", True)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -14,21 +17,14 @@ SECRET_KEY = 'django-insecure-0zd6pb-if2lclvlu6v2j$*8gcn@vfpp365o4e8-u*z4po)wl@k
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '192.168.1.65',
+    'localhost'
+]
 
 
 # Application definition
 
-INSTALLED_APPS = [
-    'polls.apps.PollsConfig',
-    'ynp_app.apps.YnpAppConfig',
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -38,7 +34,19 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'ynp_app.users_middleware.UsersMiddleware',
 ]
+
+INSTALLED_APPS = [
+    'ynp_app.apps.YnpAppConfig',
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+]
+
 
 ROOT_URLCONF = 'ynp.urls'
 
@@ -69,8 +77,13 @@ WSGI_APPLICATION = 'ynp.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        # 'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': 'ynp',
+        'USER': 'lucky',
+        'PASSWORD': 'lucky',
+        'HOST': 'localhost',
+        'PORT': '5432'
     }
 }
 
@@ -113,13 +126,13 @@ USE_TZ = True
 
 
 STATIC_URL = '/static/'
-if DEBUG:
-    STATICFILES_DIRS = [
-        BASE_DIR / "static/"
-    ]
-else:
-    STATIC_ROOT = BASE_DIR / "static"
 
+STATICFILES_DIRS = [
+        BASE_DIR / "static"
+    ]
+
+
+# STATIC_ROOT = BASE_DIR / "static"
 
 
 # Default primary key field type

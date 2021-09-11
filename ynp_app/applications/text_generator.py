@@ -2,8 +2,11 @@ import nltk
 from dataclasses import dataclass
 import re
 from nltk.tokenize import word_tokenize, regexp_tokenize
-from random import randrange
+from random import random, randrange
 # nltk.download('punkt')
+
+min_input_sentences = 10
+min_markov_chain_length = 20
 
 def word_has_punctuation_mark(word):
     return bool(re.search(r'\.|!|\?', word))
@@ -113,6 +116,7 @@ def generate_random_text(markov_chain, trigrams, sentences_count=10, minimal_sen
     current_sentence_index = 0
     should_continue_outer_loop = False
     while current_sentence_index < sentences_count:
+        while_count = 0
         random_index = randrange(0, len(markov_chain) - 1)
         head: str = keys[random_index]
         if word_has_punctuation_mark(head) or not head[0].isupper():
@@ -123,8 +127,11 @@ def generate_random_text(markov_chain, trigrams, sentences_count=10, minimal_sen
         current_sentence.extend([first_head.capitalize(), second_head])
         current_word_index = 0
         while True:
+            while_count += 1
+            # if while_count > 200:
+            #     breakpoint()
             should_break = False
-            if head not in markov_chain:
+            if (head not in markov_chain) or (while_count > 200):
                 should_continue_outer_loop = True
                 break
 
@@ -150,19 +157,22 @@ def generate_random_text(markov_chain, trigrams, sentences_count=10, minimal_sen
         sentences.append(current_sentence)
         current_sentence_index += 1
 
-    for snt in sentences:
-        print(' '.join(snt))
-    return sentences
 
-def main():
-    # filename = input()
-    filename = 'kaliber.txt'
-    with open(filename, 'r', encoding="utf-8") as file:
-        file_content = file.read()
-        tokens = file_content.split()
-        trigrams = generate_trigrams(tokens)
-        markov_chain = generate_markov_chain(trigrams)
-        random_text = generate_random_text(markov_chain, trigrams=trigrams)
+    _result = ''
+
+    for snt in sentences:
+        _result += ' ' + ' '.join(snt)
+    return _result
+
+def main(text='', sequences_count = 10):
+    tokens = text.split()
+    # print(tokens)
+    trigrams = generate_trigrams(tokens)
+    markov_chain = generate_markov_chain(trigrams)
+    if len(markov_chain) < min_markov_chain_length:
+        raise ValueError('Входной текст слишком короткий.')
+    random_text = generate_random_text(markov_chain, trigrams=trigrams, sentences_count=sequences_count)
+    return random_text
 
 if __name__ == '__main__':
     main()
