@@ -19,14 +19,18 @@ const Preloader = ({ ...props }) => {
                 leaving: !props.in
             })
 
-            setTimeout(() => {
-                setState({
-                    show: props.in,
-                    entering: props.in,
-                    leaving: false
-                })
-            }, animDuration)
+            if (!props.in) {
+                setTimeout(() => {
+                    setState({
+                        show: false,
+                        entering: false,
+                        leaving: false
+                    })
+                }, animDuration)
+            }
+            
     }, [props.in])
+
     return (
         state.show && 
             <div className={classNames("preloader-wrapper", {

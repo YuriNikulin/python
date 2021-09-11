@@ -13,4 +13,5 @@ urlpatterns = [
 
     path('app/csv_editor', controller_csv_editor.index, name=routes.ROUTE_APP_CSV_EDITOR['name']),
     path('api/csv_editor/import', controller_csv_editor.import_file),
+    path('api/csv_editor/getData', controller_csv_editor.get_data),
 ]

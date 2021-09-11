@@ -9,6 +9,7 @@ const AppState = {
 
 export const AppStateContext = createContext()
 export const useStore = () => useContext(AppStateContext)
+export let getState
 
 const App = () => {
     const [state, dispatch] = useReducer(reducer, initialState)
@@ -16,6 +17,8 @@ const App = () => {
     const _dispatch = (fn) => {
         dispatch(fn(state, dispatch))
     }
+
+    getState = () => state
 
     return (
         <AppStateContext.Provider value={[state, _dispatch]}>

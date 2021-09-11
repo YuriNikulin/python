@@ -1,5 +1,7 @@
 import * as TYPES from './types'
 import makeRequest from 'common/request'
+import { sleep } from '../../../../common/js/utils'
+import { getState } from '..'
 
 export const setLoading = (payload) => () => {
     return {
@@ -8,8 +10,43 @@ export const setLoading = (payload) => () => {
     }
 }
 
+export const fetchData = (payload) => async (_, dispatch) => {
+    const state = getState()
+    const options = {
+        resetPagination: false,
+        resetFilters: false,
+        ...payload.options
+    }
+
+    dispatch({
+        type: TYPES.FETCH_DATA_REQUEST
+    })
+
+    try {
+        const body = {}
+        body.page = state.data.pagination.page
+
+        const res = await makeRequest('/api/csv_editor/getData', {
+            method: 'POST',
+            body,
+            showErrorNotification: true
+        })
+
+        dispatch({
+            type: TYPES.FETCH_DATA_SUCCESS,
+            payload: res
+        })
+    } catch(e) {
+        dispatch({
+            type: TYPES.FETCH_DATA_ERROR
+        })
+    }
+}
+
 export const importFile = (file) => async (state, dispatch) => {
-    dispatch(setLoading(true)())
+    dispatch({
+        type: TYPES.IMPORT_FILE_REQUEST
+    })
     const formData = new FormData()
     formData.append('file', file)
     try {
@@ -19,9 +56,24 @@ export const importFile = (file) => async (state, dispatch) => {
             useStringifyBody: false,
             showErrorNotification: true
         })
-    } catch(e) {
 
-    } finally {
-        dispatch(setLoading(false)())
+        dispatch({
+            type: TYPES.IMPORT_FILE_SUCCESS,
+            payload: res
+        })
+    } catch(e) {
+        dispatch({
+            type: TYPES.IMPORT_FILE_ERROR,
+        })
     }
+}
+
+export const changePage = (page) => async (state, dispatch) => {
+    dispatch({
+        type: TYPES.CHANGE_PAGE,
+        payload: page
+    })
+
+    await sleep(5)
+    dispatch(fetchData({})(state, dispatch))
 }
