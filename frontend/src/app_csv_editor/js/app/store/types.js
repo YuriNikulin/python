@@ -12,3 +12,5 @@ export const FETCH_DATA_ERROR = 'FETCH_DATA_ERROR'
 
 export const CHANGE_SORT = 'CHANGE_SORT'
 export const CHANGE_PAGE = 'CHANGE_PAGE'
+export const CHANGE_FILTER = 'CHANGE_FILTER'
+export const RESET_FILTER = 'RESET_FILTER'

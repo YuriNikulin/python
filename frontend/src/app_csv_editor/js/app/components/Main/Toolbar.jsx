@@ -2,7 +2,7 @@ import React, { useCallback, useContext, useEffect, useRef } from 'react';
 import Table from '../Table/Table'
 import Button from 'common/react_components/Button'
 import { useStore } from '../..';
-import { importFile } from '../../store/actions';
+import { changeFilter, importFile, resetFilter } from '../../store/actions';
 
 const Toolbar = () => {
     const [state, dispatch] = useStore()
@@ -13,6 +13,9 @@ const Toolbar = () => {
         dispatch(importFile(file))
     }, [])
 
+    const handleFiltersReset = useCallback(() => {
+        dispatch(resetFilter())
+    }, [])
 
     return (
         <div>
@@ -27,6 +30,11 @@ const Toolbar = () => {
             </Button>
             <Button className="ms-3">Экспорт файла</Button>
             <Button className="ms-3">Новый документ</Button>
+            {!!state.data.filters.length && (
+                <Button className="ms-3" type="outline-primary" onClick={handleFiltersReset}>
+                    Очистить фильтры
+                </Button>
+            )}
         </div>
     )
 }

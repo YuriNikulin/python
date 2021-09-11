@@ -2,7 +2,7 @@ import React, { useCallback, useContext, useEffect } from 'react';
 import { useStore } from '../../';
 import Pagination from '../../../../../common/js/react_components/Pagination';
 import Preloader from '../../../../../common/js/react_components/Preloader';
-import { changePage, fetchData, setLoading } from '../../store/actions'
+import { changeFilter, changePage, changeSort, fetchData, setLoading } from '../../store/actions'
 import Table from '../Table/Table'
 import Toolbar from './Toolbar';
 
@@ -13,6 +13,14 @@ const Main = () => {
         dispatch(changePage(page))
     }, [dispatch])
 
+    const handleSort = useCallback((value) => {
+        dispatch(changeSort(value))
+    }, [])
+
+    const handleFilter = useCallback((value) => {
+        dispatch(changeFilter(value))
+    }, [])
+
     useEffect(() => {
         dispatch(fetchData({}))
     }, [])
@@ -22,9 +30,16 @@ const Main = () => {
             <div className="container d-flex flex-column flex-grow-1 overflow-hidden">
                 <div className="d-flex flex-column flex-grow-1 overflow-hidden">
                     <Preloader in={state.loading} />
-                    <Toolbar />
+                    <Toolbar filters={state.data.filters} />
                     <div className="d-flex flex-column flex-grow-1 overflow-hidden">
-                        <Table data={state.data.data} loading={state.loading} />
+                        <Table
+                            data={state.data.data}
+                            loading={state.loading}
+                            sort={state.data.sort}
+                            onSort={handleSort}
+                            filters={state.data.filters}
+                            onFilter={handleFilter}
+                        />
                     </div>
                 </div>
             </div>

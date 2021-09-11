@@ -9,7 +9,9 @@ export const initialState = {
         data: {
             keys: [],
             values: []
-        }
+        },
+        sort: {},
+        filters: []
     }
 }
 
@@ -42,7 +44,10 @@ export const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 loading: false,
-                data: action.payload
+                data: {
+                    ...state.data,
+                    ...action.payload
+                }
             }
 
         case TYPES.IMPORT_FILE_ERROR:
@@ -61,6 +66,49 @@ export const reducer = (state = initialState, action) => {
                         ...state.data.pagination,
                         page: action.payload
                     }
+                }
+            }
+
+        case TYPES.CHANGE_SORT:
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    sort: action.payload
+                }
+            }
+
+        case TYPES.CHANGE_FILTER:
+            let newFilters
+            if (!action.payload.value) {
+                newFilters = state.data.filters.filter(f => f.key !== action.payload.key)
+            } else {
+                const existingFilterIndex = state.data.filters.findIndex(f => f.key === action.payload.key)
+
+                if (existingFilterIndex !== -1) {
+                    newFilters = [
+                        ...state.data.filters.slice(0, existingFilterIndex),
+                        action.payload,
+                        ...state.data.filters.slice(existingFilterIndex + 1)
+                    ]
+                } else {
+                    newFilters = [...state.data.filters, action.payload]
+                }
+            }
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    filters: newFilters
+                }
+            }
+
+        case TYPES.RESET_FILTER:
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    filters: initialState.data.filters
                 }
             }
 

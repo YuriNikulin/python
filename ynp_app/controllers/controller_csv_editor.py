@@ -62,7 +62,8 @@ def get_data(request):
                 "total_items": 0
             }
         })
-    res = csv_app.get_data(current_document, page=body.get('page'))
+    res = csv_app.get_data(current_document, page=body.get('page'), sort=body.get('sort'), filters=body.get('filters'))
+    del res['original_values']
     pagination = res["pagination"]
     pagination = extend_pagination(pagination)
     return JsonResponse(res)

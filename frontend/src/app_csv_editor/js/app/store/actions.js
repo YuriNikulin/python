@@ -24,7 +24,9 @@ export const fetchData = (payload) => async (_, dispatch) => {
 
     try {
         const body = {}
-        body.page = state.data.pagination.page
+        body.page = !options.resetPagination ? state.data.pagination.page : 1
+        body.sort = state.data.sort
+        body.filters = state.data.filters
 
         const res = await makeRequest('/api/csv_editor/getData', {
             method: 'POST',
@@ -76,4 +78,41 @@ export const changePage = (page) => async (state, dispatch) => {
 
     await sleep(5)
     dispatch(fetchData({})(state, dispatch))
+}
+
+export const changeSort = (value) => async (state, dispatch) => {
+    dispatch({
+        type: TYPES.CHANGE_SORT,
+        payload: value
+    })
+
+    await sleep(5)
+    dispatch(fetchData({})(state, dispatch))
+}
+
+export const changeFilter = (value) => async (state, dispatch) => {
+    dispatch({
+        type: TYPES.CHANGE_FILTER,
+        payload: value
+    })
+
+    await sleep(5)
+    dispatch(fetchData({
+        options: {
+            resetPagination: true
+        }
+    })(state, dispatch))
+}
+
+export const resetFilter = () => async (state, dispatch) => {
+    dispatch({
+        type: TYPES.RESET_FILTER,
+    })
+
+    await sleep(5)
+    dispatch(fetchData({
+        options: {
+            resetPagination: true
+        }
+    })(state, dispatch))
 }

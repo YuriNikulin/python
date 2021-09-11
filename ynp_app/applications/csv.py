@@ -3,11 +3,22 @@ import json
 import numpy
 import pandas as pd
 from os import path
+import re
 from numpy import isnan
 from numpyencoder import NumpyEncoder
 
 per_page = 100
 
+
+def df_col_contains(tested_value, search_value):
+    search = re.search(rf"{str(search_value).lower()}", f"{str(tested_value).lower()}")
+    return bool(search)
+
+def df_col_equals(tested_value, search_value):
+    try:
+        return str(tested_value) == str(search_value)
+    except Exception:
+        return False
 
 def form_response(frame: pd.DataFrame, page=1, keep_index=True, replace_nan=False):
     pagination = {
@@ -58,5 +69,22 @@ def read_file(file, keep_index=True):
     file_content.insert(0, 'id', file_content.index)
     return form_response(file_content, keep_index=keep_index, replace_nan=True)
 
-def get_data(_df, page=1):
-    return form_response(pd.DataFrame(data=_df['data']['values'], columns=list(map(lambda x: x['name'], _df['data']['keys']))), page=page)
+
+def get_data(_df, page=1, sort={}, filters=[]):
+    df = pd.DataFrame(data=_df['data']['values'], columns=list(map(lambda x: x['name'], _df['data']['keys'])))
+    sort_key = sort.get('key')
+    if sort_key:
+        print(sort.get('value'))
+        ascending = sort.get('value') == 'asc'
+        df.sort_values(by=sort_key, ascending=ascending, inplace=True)
+
+    if len(filters):
+        for f in filters:
+            key = f['key']
+            value = f['value']
+            if f['strict']:
+                df = df[df[key].apply(lambda x: df_col_equals(x, value))]
+            else:
+                df = df[df[key].apply(lambda x: df_col_contains(x, value))]
+
+    return form_response(df, page=page)
