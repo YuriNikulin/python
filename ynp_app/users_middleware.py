@@ -1,8 +1,9 @@
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
+from ynp_app.models import User
+from django.utils.deprecation import MiddlewareMixin
 
 cookie_user_key = 'ynp_user'
-from ynp_app.models import User
 
 def create_new_user():
     user = User.create()
@@ -10,15 +11,8 @@ def create_new_user():
     return user
 
 
-class UsersMiddleware(object):
-    def __init__(self, get_response):
-        self.get_response = get_response
-
-    def __call__(self, request):
-        response = self.get_response(request)
-        return response
-
-    def process_view(self, request, view_func, view_args, view_kwargs):
+class UsersMiddleware(MiddlewareMixin):
+    def process_view(self, request, view_func, *args, **kwargs):
         user = None
         user_id = request.COOKIES.get(cookie_user_key)
         if not user_id:
@@ -30,7 +24,15 @@ class UsersMiddleware(object):
 
         request.user = user
         if user_id != str(user.id):
-            expiration_date = datetime.today() + relativedelta(months=6)
-            response.set_cookie(cookie_user_key, user.id, expires=expiration_date, httponly=True)
+            request.should_set_user_cookie = True
+            # expiration_date = datetime.today() + relativedelta(months=6)
+            # response.set_cookie(cookie_user_key, user.id, expires=expiration_date, httponly=True)
 
         return None
+
+    def process_response(self, request, response):
+        if getattr(request, 'should_set_user_cookie', False):
+            user = request.user
+            expiration_date = datetime.today() + relativedelta(months=6)
+            response.set_cookie(cookie_user_key, user.id, expires=expiration_date, httponly=True)
+        return response

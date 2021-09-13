@@ -6,6 +6,7 @@ const Button = ({ type="primary", className, ...props }) => {
     return (
         <button className={cn("btn", {
             [`btn-${type}`]: true,
+            'btn-sm': props.small,
             [className]: !!className
         })} {...props}>
             {props.children}

@@ -14,3 +14,17 @@ body {
     text-transform: uppercase;
     font-weight: 700;
 }
+
+$colors: (
+    'border': $border-color,
+    'primary': $primary,
+    'danger': $danger
+);
+
+@each $name, $value in $colors {
+    .text-hover-#{$name} {
+        &:hover {
+            color: $value;
+        }
+    }
+}

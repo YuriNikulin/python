@@ -8,7 +8,7 @@ export const METHODS = {
 
 const makeRequest = async (url, params) => {
   const csrfToken = Cookies.get('csrftoken');
-  let _resJson;
+  let response;
   return new Promise(async (resolve, reject) => {
     try {
       let _url = url;
@@ -30,14 +30,18 @@ const makeRequest = async (url, params) => {
         body: method !== METHODS.GET ? body : undefined,
         method,
       });
-      _resJson = await res.json();
+      if (!params.returnRawResponse) {
+          response = await res.json();
+      } else {
+          response = res
+      }
 
       if (!res.ok) {
         throw new Error(res);
       }
 
       if (!params.returnRawResponse) {
-        return resolve(_resJson);
+        return resolve(response);
       }
       return resolve(res);
     } catch (e) {

@@ -1,3 +1,5 @@
+@import '../../common/styles/variables.scss';
+
 .ce-file-uploader {
     position: absolute;
     left: 0;
@@ -7,4 +9,56 @@
     opacity: 0;
     width: 100%;
     cursor: pointer;
+}
+
+.ce-table {
+    td {
+        position: relative;
+
+        &:first-child {
+            width: 50px;
+        }
+
+        &:last-child {
+            position: sticky;
+            right: 0;
+            background: #fff;
+            border-left: 1px solid $border-color;
+        }
+
+        &:hover {
+            .ce-table-cell-overlay {
+                width: 40px;
+                opacity: 1;
+            }
+        }
+
+        & > div {
+            padding-right: 40px;
+        }
+
+        &.edited > div {
+            padding-right: 0;
+        }
+    }
+
+    &-cell-overlay {
+        position: absolute;
+        right: 0;
+        top: 0;
+        height: 100%;
+        width: 0;
+        opacity: 0;
+        transition: .3s ease-in-out width, .3s ease-in-out opacity;
+        background-color: rgba(255, 255, 255, .97);
+        box-shadow: -1px 0px 3px rgba(0, 0, 0, .1);
+
+        button {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
 }
