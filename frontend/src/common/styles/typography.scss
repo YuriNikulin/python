@@ -17,7 +17,8 @@ body {
 
 $colors: (
     'border': $border-color,
-    'primary': $primary
+    'primary': $primary,
+    'danger': $danger
 );
 
 @each $name, $value in $colors {

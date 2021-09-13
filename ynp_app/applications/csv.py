@@ -8,6 +8,7 @@ from numpy import isnan
 from numpyencoder import NumpyEncoder
 
 per_page = 100
+id_col_name = 'Номер'
 
 
 def df_col_contains(tested_value, search_value):
@@ -20,31 +21,47 @@ def df_col_equals(tested_value, search_value):
     except Exception:
         return False
 
-def form_response(frame: pd.DataFrame, page=1, keep_index=True, replace_nan=False):
+
+def generate_df_from_json(value):
+    return pd.DataFrame(data=value['data']['values'], columns=list(map(lambda x: x['name'], value['data']['keys'])))
+
+
+def form_response(frame: pd.DataFrame, page=1, keep_index=True, replace_nan=False, columns=[]):
     pagination = {
         "page": page,
         "per_page": per_page,
     }
     _keep_index = keep_index if keep_index != None else True
 
-    keys = list(map(lambda x: { 'name': x }, frame.columns))
+    keys = list(map(lambda x: {
+        'name': x,
+        'isEditable': x != id_col_name,
+        'isMandatory': x == id_col_name,
+        'show': True
+    }, frame.columns))
     first_element_index = (pagination['page'] - 1) * pagination['per_page']
     last_element_index = first_element_index + pagination['per_page']
 
-    values = frame.to_numpy().tolist()
+    values = frame.fillna(value='')
+    if columns:
+        df_keys = values.keys()
+        excluded_columns = []
+        for _key in df_keys:
+            if _key not in columns:
+                excluded_columns.append(_key)
+                user_key = next(x for x in keys if x['name'] == _key)
+                if user_key:
+                    user_key['show'] = False
 
-    values_without_nan = []
-    if replace_nan:
-        for row in values:
-            new_row = []
-            values_without_nan.append(new_row)
-            for cell in row:
-                is_nan = pd.isna(cell)
-                new_row.append(cell if not is_nan else '')
+        user_values = values
+        user_values.drop(columns=excluded_columns, inplace=True)
+        user_values_list = user_values.to_numpy().tolist()
+        values_list = values.to_numpy().tolist()
     else:
-        values_without_nan = values
+        values_list = values.to_numpy().tolist()
+        user_values_list = values_list
 
-    truncated_values = values_without_nan[first_element_index:last_element_index]
+    truncated_values = user_values_list[first_element_index:last_element_index]
 
     value = {
         "data": {
@@ -55,7 +72,7 @@ def form_response(frame: pd.DataFrame, page=1, keep_index=True, replace_nan=Fals
             **pagination,
             "total_items": frame.shape[0]
         },
-        "original_values": values_without_nan
+        "original_values": values_list
     }
 
     return value
@@ -66,17 +83,13 @@ def read_file(file, keep_index=True):
     extension = path.splitext(file.name)[1]
     mode = 'csv' if extension == '.csv' else 'excel'
     file_content = pd.read_csv(file) if mode == 'csv' else pd.read_excel(file)
-    file_content.insert(0, 'id', file_content.index)
+    file_content.insert(0, id_col_name, file_content.index)
     return form_response(file_content, keep_index=keep_index, replace_nan=True)
 
 
-def get_data(_df, page=1, sort={}, filters=[]):
-    df = pd.DataFrame(data=_df['data']['values'], columns=list(map(lambda x: x['name'], _df['data']['keys'])))
+def get_data(_df, page=1, sort={}, filters=[], columns=None):
+    df = generate_df_from_json(_df)
     sort_key = sort.get('key')
-    if sort_key:
-        print(sort.get('value'))
-        ascending = sort.get('value') == 'asc'
-        df.sort_values(by=sort_key, ascending=ascending, inplace=True)
 
     if len(filters):
         for f in filters:
@@ -87,4 +100,50 @@ def get_data(_df, page=1, sort={}, filters=[]):
             else:
                 df = df[df[key].apply(lambda x: df_col_contains(x, value))]
 
-    return form_response(df, page=page)
+    if sort_key:
+        ascending = sort.get('value') == 'asc'
+        df.sort_values(by=sort_key, ascending=ascending, inplace=True)
+
+    return form_response(df, page=page, columns=columns)
+
+def edit(item_id, col_index, new_value, user_document):
+    df = generate_df_from_json(user_document)
+    key = df.keys()[col_index]
+    _df = df.at[item_id, key] = new_value
+
+    return form_response(df, replace_nan=True)
+
+
+def remove(item_id, user_document):
+    df = generate_df_from_json(user_document)
+    df = df[df[id_col_name] != item_id]
+    return form_response(df)
+
+
+def add(item_id, user_document):
+    df = generate_df_from_json(user_document)
+
+    new_row_index = df[df[id_col_name] == item_id].index[0] + 1
+    new_row_value = list(map(lambda x: '', range(0, len(df.keys()))))
+    df1 = df[0:new_row_index]
+    df2 = df[new_row_index:]
+    df1.loc[new_row_index] = new_row_value
+    df_result = pd.concat([df1, df2])
+    new_indexes = [*range(df_result.shape[0])]
+    df_result.index = new_indexes
+    df_result[id_col_name] = new_indexes
+    return {
+        'data': form_response(df_result),
+        'new_item_id': new_row_index
+    }
+
+
+def add_column(column, user_document):
+    df = generate_df_from_json(user_document)
+    df.insert(len(df.keys()), column, value='')
+    return form_response(df)
+
+
+def create_document():
+    df = pd.DataFrame(data=[[0]], columns=[id_col_name])
+    return form_response(df)

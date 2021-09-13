@@ -13,6 +13,7 @@ import '@szhsin/react-menu/dist/index.css';
 const _Menu = ({menuButton, children, ...props}) => {
     const [menuState, setMenuState] = useState('closed')
     const menuButtonRef = useRef()
+    const menuRef = useRef()
 
     const handleMenuButtonClick = useCallback((e) => {
         const newState = menuState === 'closed' ? 'open' : 'closed'
@@ -34,8 +35,19 @@ const _Menu = ({menuButton, children, ...props}) => {
     })
 
     useEffect(() => {
-        if (menuState === 'open' && props.onOpen) {
-            props.onOpen()
+        if (menuState === 'open') {
+            if (props.onOpen) {
+                props.onOpen()
+            }
+
+            if (menuRef.current) {
+                const input = menuRef.current.querySelector('input')
+                if (input) {
+                    setTimeout(() => {
+                        input.focus()
+                    }, 100)
+                }
+            }
         }
     }, [menuState])
 
@@ -55,6 +67,7 @@ const _Menu = ({menuButton, children, ...props}) => {
         <>
             {_menuButton}
             <ControlledMenu 
+                ref={menuRef}
                 menuButton={menuButton}
                 state={menuState}
                 anchorRef={menuButtonRef}

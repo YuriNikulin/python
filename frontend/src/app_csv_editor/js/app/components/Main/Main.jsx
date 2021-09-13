@@ -2,7 +2,7 @@ import React, { useCallback, useContext, useEffect } from 'react';
 import { useStore } from '../../';
 import Pagination from '../../../../../common/js/react_components/Pagination';
 import Preloader from '../../../../../common/js/react_components/Preloader';
-import { changeFilter, changePage, changeSort, fetchData, setLoading } from '../../store/actions'
+import { addItem, changeFilter, changePage, changeSort, editCell, fetchData, removeItem, setLoading } from '../../store/actions'
 import Table from '../Table/Table'
 import Toolbar from './Toolbar';
 
@@ -19,6 +19,18 @@ const Main = () => {
 
     const handleFilter = useCallback((value) => {
         dispatch(changeFilter(value))
+    }, [])
+
+    const handleCellEdit = useCallback((value) => {
+        dispatch(editCell(value))
+    }, [])
+
+    const handleRemove = useCallback((id) => {
+        dispatch(removeItem(id))
+    }, [])
+
+    const handleAdd = useCallback((id) => {
+        dispatch(addItem(id))
     }, [])
 
     useEffect(() => {
@@ -39,11 +51,16 @@ const Main = () => {
                             onSort={handleSort}
                             filters={state.data.filters}
                             onFilter={handleFilter}
+                            onCellEdit={handleCellEdit}
+                            shouldScrollTop={state.shouldScrollTop}
+                            onAdd={handleAdd}
+                            onRemove={handleRemove}
+                            highlightedItems={state.highlightedItems}
                         />
                     </div>
                 </div>
             </div>
-            {state.data.pagination.total_pages && (
+            {!!state.data.pagination.total_pages && (
             <div className="page-footer">
                 <div className="container">
                     <div className="row">

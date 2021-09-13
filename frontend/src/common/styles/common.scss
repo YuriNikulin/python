@@ -155,13 +155,15 @@ body {
 .page-table {
     width: 100%;
     overflow: auto;
-    // border-top: 1px solid $border-color;
     border-left: 1px solid $border-color;
+    border-bottom: 1px solid $border-color;
+    margin-bottom: $spacer * 1.5;
 }
 
 .table {
     border-collapse: separate;
     border-spacing: 0;
+    margin-bottom: 0;
     
     td, th {
         border-bottom: 1px solid $border-color;
@@ -184,6 +186,14 @@ body {
             border-top: none;
         }
     }
+
+    tbody {
+        tr {
+            &:last-child td {
+                border-bottom: none;
+            }
+        }
+    }
 }
 
 .reset-button {
@@ -198,5 +208,28 @@ body {
     svg {
         max-width: 100%;
         max-height: 100%;
+    }
+}
+
+@keyframes modalAnimation {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.modal {
+    &-overlay {
+        transition: .3s ease-in-out opacity;
+        background: rgba(0,0,0,.3);
+        opacity: 0;
+        
+        &.open-overlay {
+            animation: modalAnimation .3s ease-in-out;
+            opacity: 1;
+        }
     }
 }
