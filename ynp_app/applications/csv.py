@@ -1,11 +1,7 @@
-import json
-
-import numpy
 import pandas as pd
 from os import path
 import re
-from numpy import isnan
-from numpyencoder import NumpyEncoder
+from datetime import datetime
 
 per_page = 100
 id_col_name = 'Номер'
@@ -23,7 +19,10 @@ def df_col_equals(tested_value, search_value):
 
 
 def generate_df_from_json(value):
-    return pd.DataFrame(data=value['data']['values'], columns=list(map(lambda x: x['name'], value['data']['keys'])))
+    return pd.DataFrame(
+        data=value['data']['values'],\
+        columns=list(map(lambda x: x['name'], value['data']['keys'])),
+    )
 
 
 def form_response(frame: pd.DataFrame, page=1, keep_index=True, replace_nan=False, columns=[]):
@@ -34,7 +33,7 @@ def form_response(frame: pd.DataFrame, page=1, keep_index=True, replace_nan=Fals
     _keep_index = keep_index if keep_index != None else True
 
     keys = list(map(lambda x: {
-        'name': x,
+        'name': x.replace('№', 'Номер'),
         'isEditable': x != id_col_name,
         'isMandatory': x == id_col_name,
         'show': True
@@ -87,7 +86,7 @@ def read_file(file, keep_index=True):
     return form_response(file_content, keep_index=keep_index, replace_nan=True)
 
 
-def get_data(_df, page=1, sort={}, filters=[], columns=None):
+def get_data(_df, page=1, sort={}, filters=[], columns=None, return_df=False):
     df = generate_df_from_json(_df)
     sort_key = sort.get('key')
 
@@ -104,7 +103,14 @@ def get_data(_df, page=1, sort={}, filters=[], columns=None):
         ascending = sort.get('value') == 'asc'
         df.sort_values(by=sort_key, ascending=ascending, inplace=True)
 
-    return form_response(df, page=page, columns=columns)
+    if not return_df:
+        return form_response(df, page=page, columns=columns)
+    else:
+        if columns:
+            df_keys = df.keys()
+            excluded_columns = [x for x in df_keys if x not in columns]
+            df.drop(columns=excluded_columns, inplace=True)
+        return df
 
 def edit(item_id, col_index, new_value, user_document):
     df = generate_df_from_json(user_document)
@@ -147,3 +153,20 @@ def add_column(column, user_document):
 def create_document():
     df = pd.DataFrame(data=[[0]], columns=[id_col_name])
     return form_response(df)
+
+
+def export(user_document, format='csv', filters=[], sort={}, columns=None):
+    df = get_data(user_document, filters=filters, sort=sort, columns=columns, return_df=True)
+    result = None
+    ts = datetime.now().strftime("%d_%m_%Y_%H_%M")
+
+    if format == 'csv':
+        filename = f'{ts}.csv'
+        result = df.to_csv(index=False)
+        f = open(filename, 'w')
+        f.write(result)
+        f.close()
+    else:
+        filename = f'{ts}.xlsx'
+        df.to_excel(excel_writer=filename, index=False)
+    return filename

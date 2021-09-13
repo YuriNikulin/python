@@ -19,4 +19,5 @@ urlpatterns = [
     path('api/csv_editor/add/<int:id>', controller_csv_editor.add),
     path('api/csv_editor/addColumn', controller_csv_editor.add_column),
     path('api/csv_editor/createDocument', controller_csv_editor.create_document),
+    path('api/csv_editor/export', controller_csv_editor.export),
 ]

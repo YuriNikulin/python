@@ -52,6 +52,9 @@ const _Menu = ({menuButton, children, ...props}) => {
     }, [menuState])
 
     useEffect(() => {
+        if (props.buttonRef) {
+            props.buttonRef.current = menuButtonRef.current
+        }
         if (menuButtonRef.current) {
             menuButtonRef.current.addEventListener('close', handleMenuClose)
 

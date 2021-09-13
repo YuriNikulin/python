@@ -1,7 +1,7 @@
 import json
 import math
-from os import path
-from django.http.response import HttpResponseBadRequest, JsonResponse, HttpResponse
+from os import path, remove as os_remove
+from django.http.response import HttpResponseBadRequest, JsonResponse, HttpResponse, FileResponse
 from django.shortcuts import render
 import ynp_app.applications.csv as csv_app
 
@@ -151,10 +151,30 @@ def create_document(request):
     try:
         [user, *rest] = get_user_and_document(request)
         res = csv_app.create_document()
-        print(res)
         user.current_document = generate_json_to_save_in_db(res)
         user.save()
         return JsonResponse({})
+    except Exception as e:
+        error = HttpResponseBadRequest(json.dumps({
+            "message": str(e)
+        }))
+        return error
+
+def export(request):
+    try:
+        [user, current_document] = get_user_and_document(request)
+        body = json.loads(request.body.decode())
+        filename = csv_app.export(
+            current_document,
+            sort=body.get('sort'),
+            filters=body.get('filters'),
+            columns=body.get('columns'),
+            format=request.GET.get('format')
+        )
+        file = open(filename, 'rb')
+        os_remove(filename)
+
+        return FileResponse(file)
     except Exception as e:
         error = HttpResponseBadRequest(json.dumps({
             "message": str(e)

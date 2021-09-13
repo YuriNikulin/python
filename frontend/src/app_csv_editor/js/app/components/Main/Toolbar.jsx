@@ -1,7 +1,8 @@
-import React, { useCallback, useContext, useEffect, useRef } from 'react';
+import React, { useCallback, useRef } from 'react';
 import Button from 'common/react_components/Button'
 import Menu from 'common/react_components/Menu'
 import ColumnsSettings from './ColumnsSettings'
+import Export from './Export'
 import { useStore } from '../..';
 import { addColumn, createDocument, importFile, resetFilter } from '../../store/actions';
 
@@ -49,7 +50,9 @@ const Toolbar = () => {
                     accept=".csv, .xls, .xlsx"
                 />
             </Button>
-            <Button className="ms-3">Экспорт файла</Button>
+            <div className="d-inline-block ms-3">
+                <Export />
+            </div>
             <Button className="ms-3" onClick={handleNewDocumentClick}>Новый документ</Button>
             <ColumnsSettings />
             <Menu
