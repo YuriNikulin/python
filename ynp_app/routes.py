@@ -12,3 +12,7 @@ ROUTE_APP_TEXT_GENERATOR = {
 ROUTE_APP_CSV_EDITOR = {
     "name": "app_csv_editor"
 }
+
+ROUTE_APP_TASK_MANAGER = {
+    "name": "app_task_manager"
+}

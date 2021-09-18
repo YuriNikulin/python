@@ -56,7 +56,7 @@ def applications_list(request):
                     }
                 ],
                 "bg_img_src": 'homepage/img/app_task_tracker.png',
-                "app_name": routes.ROUTE_APP_CALCULATOR['name'],
+                "app_name": routes.ROUTE_APP_TASK_MANAGER['name'],
             }
         ],
     }

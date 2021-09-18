@@ -20,6 +20,7 @@
         var mainWrapper = document.querySelector('.main-wrapper')
         var preloader = document.querySelector('.main-preloader')
         mainWrapper.style.display = 'block'
+        mainWrapper.classList.add('shown')
         preloader.style.opacity = 0;
         isLoaded = true
         setTimeout(() => {

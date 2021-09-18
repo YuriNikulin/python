@@ -1,7 +1,7 @@
 from django.urls import path
 from . import routes
 from . import views
-from ynp_app.controllers import controller_calculator, controller_text_generator, controller_csv_editor
+from ynp_app.controllers import controller_calculator, controller_text_generator, controller_csv_editor, controller_task_manager
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -20,4 +20,10 @@ urlpatterns = [
     path('api/csv_editor/addColumn', controller_csv_editor.add_column),
     path('api/csv_editor/createDocument', controller_csv_editor.create_document),
     path('api/csv_editor/export', controller_csv_editor.export),
+
+    path('app/task_manager', controller_task_manager.index, name=routes.ROUTE_APP_TASK_MANAGER['name']),
+    path('api/task_manager/task', controller_task_manager.TaskView.as_view()),
+    path('api/task_manager/task/<int:pk>', controller_task_manager.SingleTaskView.as_view()),
+    path('api/task_manager/task/<int:pk>/tag/<int:tag_id>', controller_task_manager.TaskTagView.as_view()),
+    path('api/task_manager/tag', controller_task_manager.TagView.as_view())
 ]

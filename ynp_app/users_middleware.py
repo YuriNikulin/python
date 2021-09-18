@@ -7,12 +7,14 @@ cookie_user_key = 'ynp_user'
 
 def create_new_user():
     user = User.create()
+    user.name = user.id
     user.save()
     return user
 
 
 class UsersMiddleware(MiddlewareMixin):
     def process_view(self, request, view_func, *args, **kwargs):
+        setattr(request, '_dont_enforce_csrf_checks', True)
         user = None
         user_id = request.COOKIES.get(cookie_user_key)
         if not user_id:
@@ -25,8 +27,6 @@ class UsersMiddleware(MiddlewareMixin):
         request.user = user
         if user_id != str(user.id):
             request.should_set_user_cookie = True
-            # expiration_date = datetime.today() + relativedelta(months=6)
-            # response.set_cookie(cookie_user_key, user.id, expires=expiration_date, httponly=True)
 
         return None
 

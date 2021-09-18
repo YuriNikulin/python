@@ -55,8 +55,6 @@ const Modal = ({closable = true, closeOnEsc = true, ...props}) => {
         }
     }, [isOpen])
 
-    // console.log(isTrulyOpen)
-
     return (
         <Popup
             className={classNames("modal", {

@@ -17,6 +17,9 @@ const applications = {
   },
   app_csv_editor: {
     id: 'app_csv_editor'
+  },
+  app_task_manager: {
+    id: 'app_task_manager'
   }
 }
 

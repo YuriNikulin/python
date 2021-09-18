@@ -140,8 +140,11 @@ body {
 .page-full-height {
     height: 100vh;
     overflow: hidden;
-    display: flex !important;
     flex-direction: column;
+    
+    &.shown {
+        display: flex !important;
+    }
 }
 
 .page-footer {

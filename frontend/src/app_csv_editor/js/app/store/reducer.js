@@ -137,6 +137,7 @@ export const reducer = (state = initialState, action) => {
                 if (state.data.data.values[i][0] === action.payload.id) {
                     row = state.data.data.values[i]
                     rowIndex = i
+                    break
                 }
             }
             if (!row) {
@@ -251,6 +252,19 @@ export const reducer = (state = initialState, action) => {
                     ...state.data,
                     columns: action.payload
                 }
+            }
+
+        case TYPES.EXPORT_DOCUMENT_REQUEST:
+            return {
+                ...state,
+                loading: true
+            }
+
+        case TYPES.EXPORT_DOCUMENT_SUCCESS:
+        case TYPES.EXPORT_DOCUMENT_ERROR:
+            return {
+                ...state,
+                loading: false
             }
 
         default:
