@@ -51,6 +51,7 @@ INSTALLED_APPS = [
 
 ROOT_URLCONF = 'ynp.urls'
 
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',

@@ -236,3 +236,47 @@ body {
         }
     }
 }
+
+.szh {
+    &-menu {
+        &-container {
+            &.full-width {
+                &, & > ul {
+                    width: 100%;
+                }
+            }
+
+            & > ul {
+                min-height: 50px;
+            }
+        }
+    }
+}
+
+.select {
+    position: relative;
+
+    input {
+        padding-right: 40px;
+    }
+    
+    &-buttons {
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 100%;
+        width: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        padding-right: 8px;
+
+        button {
+            color: $gray-500;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            width: 30px;
+        }
+    }
+}

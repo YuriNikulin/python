@@ -48,13 +48,13 @@ class Task(models.Model):
     related_tasks = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='%(class)s_author', null=True, blank=True)
     assignee = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE, related_name='%(class)s_assignee')
-    tags = models.ManyToManyField(Tag)
+    tags = models.ManyToManyField(Tag, null=True)
     priority = models.CharField(max_length=2, null=True, blank=True, choices=(
         ('1', 'Minor'),
         ('2', 'Medium'),
         ('3', 'High'),
         ('4', 'Critical'),
-        ('5', 'Blocker'),
+        ('5', 'Blocker')    ,
     ))
     status = models.CharField(max_length=2, null=True, blank=True, choices=(
         ('1', 'Backlog'),

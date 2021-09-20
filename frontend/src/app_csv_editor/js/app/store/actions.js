@@ -71,7 +71,8 @@ export const importFile = (file) => async (state, dispatch) => {
             method: 'POST',
             body: formData,
             useStringifyBody: false,
-            showErrorNotification: true
+            showErrorNotification: true,
+            shouldSetContentType: false
         })
 
         dispatch({

@@ -20,7 +20,11 @@ const makeRequest = async (url, params) => {
       const headers = {
         'X-CSRFToken': csrfToken,
         ...(params.headers || {}),
-      };
+      }
+
+      if (params.shouldSetContentType !== false) {
+        headers['Content-Type'] = 'application/json'
+      } 
 
       const method = params.method || METHODS.GET;
       const body = params.useStringifyBody !== false ? JSON.stringify(params.body || {}) : params.body;

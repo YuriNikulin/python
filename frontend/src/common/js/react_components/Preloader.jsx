@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import preloaderIcon from '../../icons/preloader.svg'
 import classNames from 'classnames'
@@ -11,24 +11,30 @@ const Preloader = ({ ...props }) => {
         entering: false,
         leaving: false
     })
+    const shouldToggleShow = useRef()
 
     useEffect(() => {
-            setState({
-                show: true,
-                entering: props.in,
-                leaving: !props.in
-            })
-
-            if (!props.in) {
-                setTimeout(() => {
+        if (props.in) {
+            shouldToggleShow.current = true
+            setTimeout(() => {
+                if (shouldToggleShow.current) {
                     setState({
-                        show: false,
-                        entering: false,
-                        leaving: false
+                        show: true,
+                        entering: props.in,
+                        leaving: !props.in
                     })
-                }, animDuration)
-            }
-            
+                }
+            }, animDuration)
+        } else {
+            shouldToggleShow.current = false
+            setTimeout(() => {
+                setState({
+                    show: false,
+                    entering: false,
+                    leaving: false
+                })
+            }, animDuration)
+        }
     }, [props.in])
 
     return (

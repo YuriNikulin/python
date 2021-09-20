@@ -16,11 +16,12 @@ class TagSerializer(serializers.ModelSerializer):
 
 class TaskListSerializer(serializers.ModelSerializer):
     tags = TagSerializer(read_only=True, many=True)
+    author = UserSerializer(read_only=True)
+    assignee = UserSerializer(read_only=True)
 
     class Meta:
         model = Task
-        fields = ['id', 'name', 'description', 'tags', 'assignee']
-
+        fields = ['id', 'name', 'description', 'tags', 'author', 'assignee', 'priority', 'status']
 
 
 class TaskCreateSerializer(serializers.ModelSerializer):

@@ -23,7 +23,9 @@ urlpatterns = [
 
     path('app/task_manager', controller_task_manager.index, name=routes.ROUTE_APP_TASK_MANAGER['name']),
     path('api/task_manager/task', controller_task_manager.TaskView.as_view()),
+    path('api/task_manager/task/create', controller_task_manager.TaskViewCreate.as_view()),
     path('api/task_manager/task/<int:pk>', controller_task_manager.SingleTaskView.as_view()),
     path('api/task_manager/task/<int:pk>/tag/<int:tag_id>', controller_task_manager.TaskTagView.as_view()),
-    path('api/task_manager/tag', controller_task_manager.TagView.as_view())
+    path('api/task_manager/tag', controller_task_manager.TagView.as_view()),
+    path('api/task_manager/user', controller_task_manager.UserView.as_view())
 ]

@@ -58,6 +58,7 @@ const Toolbar = () => {
             <Menu
                 menuButton={(<span><Button className="ms-3">Добавить столбец</Button></span>)}
                 portal={true}
+                fullWidth={false}
             >
                 <div className="px-3 py-2">
                     <div>
