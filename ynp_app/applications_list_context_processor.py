@@ -1,10 +1,7 @@
 from django import urls
 from . import routes
 
-
-def applications_list(request):
-    return {
-        'applications_list': [
+applications_list = [
             {
                 "id": "calculator",
                 "name": "Калькулятор",
@@ -15,7 +12,16 @@ def applications_list(request):
                 ",
                 "bg_img_src": 'homepage/img/app_calculator.jpg',
                 "app_name": routes.ROUTE_APP_CALCULATOR['name'],
-                "source_link": "https://github.com/YuriNikulin/python/blob/master/ynp_app/applications/calculator.py"
+                "sources": [
+                    {
+                        "name": "Логика",
+                        "url": "https://github.com/YuriNikulin/python/blob/master/ynp_app/applications/calculator.py"
+                    },
+                    {
+                        "name": "View",
+                        "url": "https://github.com/YuriNikulin/python/blob/master/ynp_app/controllers/controller_calculator.py"
+                    }
+                ]
             },
             {
                 "id": "text_generator",
@@ -31,7 +37,16 @@ def applications_list(request):
                         "name": 'nltk'
                     }
                 ],
-                "source_link": "https://github.com/YuriNikulin/python/blob/master/ynp_app/applications/text_generator.py"
+                "sources": [
+                    {
+                        "name": "Логика",
+                        "url": "https://github.com/YuriNikulin/python/blob/master/ynp_app/applications/text_generator.py"
+                    },
+                    {
+                        "name": "View",
+                        "url": "https://github.com/YuriNikulin/python/blob/master/ynp_app/controllers/controller_text_generator.py"
+                    }
+                ]
             },
             {
                 "id": "csv_editor",
@@ -40,7 +55,16 @@ def applications_list(request):
                 "description": "\
                     С помощью приложения можно создавать и редактировать XLS и CSV документы.\
                 ",
-                "source_link": "https://github.com/YuriNikulin/python/blob/master/ynp_app/applications/csv.py",
+                "sources": [
+                    {
+                        "name": "Логика",
+                        "url": "https://github.com/YuriNikulin/python/blob/master/ynp_app/applications/csv.py"
+                    },
+                    {
+                        "name": "View",
+                        "url": "https://github.com/YuriNikulin/python/blob/master/ynp_app/controllers/controller_csv_editor.py"
+                    }
+                ],
                 "bg_img_src": 'homepage/img/app_csv_editor.jpg',
                 "app_name": routes.ROUTE_APP_CSV_EDITOR['name'],
                 "technologies": [
@@ -54,6 +78,12 @@ def applications_list(request):
                 "name": "Таск-трекер",
                 "path": routes.ROUTE_APP_TASK_MANAGER['path'],
                 "description": "В приложении реализован базовый функционал таск-трекера.",
+                "sources": [
+                    {
+                        "name": "View",
+                        "url": "https://github.com/YuriNikulin/python/blob/master/ynp_app/controllers/controller_task_manager.py"
+                    }
+                ],
                 "technologies": [
                     {
                         "name": "django rest framework"
@@ -62,5 +92,17 @@ def applications_list(request):
                 "bg_img_src": 'homepage/img/app_task_tracker.png',
                 "app_name": routes.ROUTE_APP_TASK_MANAGER['name'],
             }
-        ],
+        ]
+
+
+def applications(request):
+    current_application = None
+    try:
+        current_application = next(x for x in applications_list if x['path'] in request.path)
+    except Exception:
+        pass
+
+    return {
+        'applications_list': applications_list,
+        'current_application': current_application
     }

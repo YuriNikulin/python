@@ -69,7 +69,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'ynp_app.applications_list_context_processor.applications_list'
+                'ynp_app.applications_list_context_processor.applications'
             ],
         },
     },

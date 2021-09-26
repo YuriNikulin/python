@@ -8,11 +8,7 @@
     {% csrf_token %}
     <div id="csv-editor" class="flex-grow-1 d-flex flex-column overflow-hidden">
         <div class="container">
-            <div class="row mb-4">
-                <h3 class="title text-center">
-                    CSV/XML редактор
-                </h3>
-            </div>
+            {% include "app-title.html" %}
         </div>
         <div id="ce-app" class="d-flex flex-column flex-grow-1 overflow-hidden">
         </div>
