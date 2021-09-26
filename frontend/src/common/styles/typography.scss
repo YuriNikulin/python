@@ -24,7 +24,7 @@ $colors: (
 @each $name, $value in $colors {
     .text-hover-#{$name} {
         &:hover {
-            color: $value;
+            color: $value !important;
         }
     }
 }

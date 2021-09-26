@@ -8,6 +8,7 @@ def applications_list(request):
             {
                 "id": "calculator",
                 "name": "Калькулятор",
+                "path": routes.ROUTE_APP_CALCULATOR['path'],
                 "description": "\
                     Простой калькулятор, умеющий выполнять простые арифметические действия:\
                     сложение, вычитание, умножение, деление. Понимает скобки. Не использует eval.\
@@ -19,6 +20,7 @@ def applications_list(request):
             {
                 "id": "text_generator",
                 "name": "Генератор случайного текста",
+                "path": routes.ROUTE_APP_TEXT_GENERATOR['path'],
                 "description": "\
                     Приложение умеет генерировать псевдослучайный текст на основе введённого текста.\
                 ",
@@ -34,6 +36,7 @@ def applications_list(request):
             {
                 "id": "csv_editor",
                 "name": "CSV/XML - редактор",
+                "path": routes.ROUTE_APP_CSV_EDITOR['path'],
                 "description": "\
                     С помощью приложения можно создавать и редактировать XLS и CSV документы.\
                 ",
@@ -49,6 +52,7 @@ def applications_list(request):
             {
                 "id": "task_tracker",
                 "name": "Таск-трекер",
+                "path": routes.ROUTE_APP_TASK_MANAGER['path'],
                 "description": "В приложении реализован базовый функционал таск-трекера.",
                 "technologies": [
                     {

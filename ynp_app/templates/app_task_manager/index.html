@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block main_wrapper_classname %}page-full-height{% endblock %}
 {% block head %}
     
 {% endblock %}
@@ -9,11 +8,13 @@
 
 {% block content %}
     {% csrf_token %}
-    <div class="container" id="task-manager">
-        <div class="row mb-4">
-            <h3 class="title text-center">
-                Таск-трекер
-            </h3>
+    <div class="" id="task-manager">
+        <div class="container">
+            <div class="row mb-4">
+                <h3 class="title text-center">
+                    Таск-трекер
+                </h3>
+            </div>
         </div>
         <div id="tm-app">
         </div>

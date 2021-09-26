@@ -34,5 +34,6 @@ class UsersMiddleware(MiddlewareMixin):
         if getattr(request, 'should_set_user_cookie', False):
             user = request.user
             expiration_date = datetime.today() + relativedelta(months=6)
-            response.set_cookie(cookie_user_key, user.id, expires=expiration_date, httponly=True)
+            response.set_cookie(cookie_user_key, user.id, expires=expiration_date, httponly=True, samesite='Lax')
+            response.set_cookie(f'{cookie_user_key}_readonly', user.id, expires=expiration_date, samesite='Lax')
         return response

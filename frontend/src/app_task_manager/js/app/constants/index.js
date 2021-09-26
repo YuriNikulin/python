@@ -69,3 +69,26 @@ export const ENUMS = {
         },
     }
 }
+
+export const SORTINGS = [
+    {
+        key: 'updated',
+        name: 'дате обновления'
+    },
+    {
+        key: 'created',
+        name: 'дате создания'
+    },
+    {
+        key: 'status',
+        name: 'статусу'
+    },
+    {
+        key: 'priority',
+        name: 'приоритету'
+    },
+    {
+        key: 'name',
+        name: 'названию'
+    }
+]

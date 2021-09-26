@@ -27,7 +27,7 @@ def generate_df_from_json(value):
 
 def form_response(frame: pd.DataFrame, page=1, keep_index=True, replace_nan=False, columns=[]):
     pagination = {
-        "page": page,
+        "page": page if page != None else 1,
         "per_page": per_page,
     }
     _keep_index = keep_index if keep_index != None else True

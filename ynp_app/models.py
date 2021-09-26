@@ -10,17 +10,8 @@ class User(models.Model):
     def __str__(self):
         return self.name
 
-    # todo: remove
-    def is_active(self):
-        return True
-
-    def is_staff(self):
-        return True
-
-    def has_module_perms(self, perms):
-        return True
-
-    def has_perm(self, perm):
+    @classmethod
+    def is_active(cls):
         return True
 
     @classmethod
@@ -37,6 +28,7 @@ class Tag(models.Model):
     def create(cls, validated_data):
         return cls.create(**validated_data)
 
+
     def __str__(self):
         return f'Tag {self.name}'
 
@@ -45,7 +37,7 @@ class Task(models.Model):
     id = models.BigAutoField(primary_key=True, unique=True, editable=False)
     name = models.CharField(max_length=150)
     description = models.CharField(max_length=2000, null=True, blank=True)
-    related_tasks = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE)
+    related_tasks = models.ManyToManyField('self', null=True, blank=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='%(class)s_author', null=True, blank=True)
     assignee = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE, related_name='%(class)s_assignee')
     tags = models.ManyToManyField(Tag, null=True)
@@ -66,10 +58,26 @@ class Task(models.Model):
         ('7', 'Done'),
         ('8', 'Frozen'),
     ))
+    time_estimated = models.FloatField(null=True, blank=True)
+    time_spent = models.FloatField(null=True, blank=True)
+    time_remaining = models.FloatField(null=True, blank=True)
+    created = models.DateTimeField(auto_now_add=True, null=True)
+    updated = models.DateTimeField(auto_now=True, null=True)
 
     @classmethod
-    def create(cls, validated_data):
+    def create(cls, validated_data, *args, **kwargs):
         return cls.create(**validated_data)
+
+
+    def save(self, *args, **kwargs):
+        time_estimated = self.time_estimated or 0
+        time_spent = self.time_spent or 0
+        new_time_remaining = time_estimated - time_spent
+        if new_time_remaining < 0:
+            new_time_remaining = 0
+        self.time_remaining = new_time_remaining
+        super(Task, self).save(*args, **kwargs)
+
 
     def __str__(self):
         return f'Task {self.name}'

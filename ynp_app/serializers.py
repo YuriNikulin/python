@@ -14,6 +14,12 @@ class TagSerializer(serializers.ModelSerializer):
         fields = ['id', 'name']
 
 
+class RelatedTaskSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Task
+        fields = ['id', 'name']
+
+
 class TaskListSerializer(serializers.ModelSerializer):
     tags = TagSerializer(read_only=True, many=True)
     author = UserSerializer(read_only=True)
@@ -21,7 +27,7 @@ class TaskListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Task
-        fields = ['id', 'name', 'description', 'tags', 'author', 'assignee', 'priority', 'status']
+        fields = ['id', 'name', 'description', 'tags', 'author', 'assignee', 'priority', 'status', 'created', 'updated']
 
 
 class TaskCreateSerializer(serializers.ModelSerializer):
@@ -32,7 +38,9 @@ class TaskCreateSerializer(serializers.ModelSerializer):
 
 class TaskSingleSerializerGet(serializers.ModelSerializer):
     assignee = UserSerializer(read_only=True)
+    author = UserSerializer(read_only=True)
     tags = TagSerializer(read_only=True, many=True)
+    related_tasks = RelatedTaskSerializer(read_only=True, many=True)
 
     class Meta:
         model = Task

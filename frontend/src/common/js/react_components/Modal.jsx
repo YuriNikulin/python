@@ -1,13 +1,15 @@
 import classNames from 'classnames'
-import React, { useCallback, useEffect, useLayoutEffect, useState } from 'react'
+import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { CloseIcon } from 'common/react_components/Icon'
 import Popup from 'reactjs-popup'
 
 const modalOverlayClass = 'modal-overlay'
 
-const Modal = ({closable = true, closeOnEsc = true, ...props}) => {
+const Modal = ({ closable = true, closeOnEsc = true, ...props }) => {
     const [isOpen, setIsOpen] = useState(!!props.isOpen)
     const [isTrulyOpen, setIsTrulyOpen] = useState(isOpen)
+    const bodyRef = useRef()
+    const footerRef = useRef()
 
     const handleClose = useCallback(() => {
         if (props.onClose) {
@@ -32,6 +34,13 @@ const Modal = ({closable = true, closeOnEsc = true, ...props}) => {
             if (closeOnEsc && closable) {
                 handleClose()
             }
+        } else if (e.key === 'Enter') {
+            if (footerRef.current) {
+                const submitButton = footerRef.current.querySelector('[data-trigger-enter]')
+                if (submitButton) {
+                    submitButton.click()
+                }
+            }
         }
     }
 
@@ -44,6 +53,14 @@ const Modal = ({closable = true, closeOnEsc = true, ...props}) => {
             setIsTrulyOpen(true)
             window.addEventListener('click', handleWindowClick)
             window.addEventListener('keydown', handleKeyDown)
+            setTimeout(() => {
+                if (bodyRef.current) {
+                    const input = bodyRef.current.querySelector('input, textarea')
+                    if (input) {
+                        input.focus()
+                    }
+                }
+            }, 300)
             return () => {
                 window.removeEventListener('click', handleWindowClick)
                 window.removeEventListener('keydown', handleKeyDown)
@@ -82,17 +99,17 @@ const Modal = ({closable = true, closeOnEsc = true, ...props}) => {
                     )}
                 </div>
             )}
-            <div className="modal-body">
-                {props.children} 
+            <div className="modal-body" ref={bodyRef}>
+                {props.children}
             </div>
             {props.footer && (
-                <div className="modal-footer">
+                <div className="modal-footer" ref={footerRef}>
                     {props.footer}
                 </div>
             )}
         </Popup>
     )
-    
+
 }
 
 export default Modal

@@ -56,7 +56,7 @@ const MenuApi = (props) => {
                         </Menu.Item>
                     )
                 }) : (
-                    <div className="px-3">
+                    <div className="px-3 text-secondary text-center">
                         {!loading && 'Ничего не найдено'}
                     </div>
                 )

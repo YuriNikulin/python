@@ -48,6 +48,10 @@ INSTALLED_APPS = [
     'rest_framework'
 ]
 
+REST_FRAMEWORK = {
+    'EXCEPTION_HANDLER': 'ynp_app.utils.custom_exception_handler'
+}
+
 
 ROOT_URLCONF = 'ynp.urls'
 

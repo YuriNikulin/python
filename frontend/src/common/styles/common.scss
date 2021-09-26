@@ -33,12 +33,13 @@ body {
     top: 0;
     background: #fff;
     z-index: 5;
-    transition: .3s ease-in-out box-shadow;
+    transition: .3s ease-in-out box-shadow, .3s ease-in-out padding;
 
     .logo {
         text-transform: uppercase;
         margin-bottom: 0;
-        transition: .3s ease-in-out font-size;
+        transition: .3s ease-in-out transform;
+        transform-origin: 0;
 
         &-link {
             color: $body-color;
@@ -59,10 +60,11 @@ body {
     }
 
     &.stuck {
+        padding: 0 !important;
         box-shadow: 0px 2px 5px rgba(0,0,0,.1);
 
         .logo {
-            font-size: 20px;
+            transform: scale(0.5);
         }
     }
 }
@@ -248,7 +250,13 @@ body {
 
             & > ul {
                 min-height: 50px;
+                max-height: 350px;
+                overflow: auto;
             }
+        }
+
+        &__item {
+            padding: $spacer / 2 $spacer !important;
         }
     }
 }
@@ -257,7 +265,8 @@ body {
     position: relative;
 
     input {
-        padding-right: 40px;
+        padding-right: 60px;
+        text-overflow: ellipsis;
     }
     
     &-buttons {
@@ -278,5 +287,13 @@ body {
             justify-content: flex-end;
             width: 30px;
         }
+    }
+
+    &-footer { 
+        position: sticky;
+        bottom: -8px;
+        padding: $spacer / 2 $spacer;
+        background: #fff;
+        box-shadow: 0px -2px 4px rgba(0,0,0,.1);
     }
 }
