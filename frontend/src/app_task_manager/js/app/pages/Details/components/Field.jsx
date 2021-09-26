@@ -111,6 +111,19 @@ const Field = (props) => {
             {props.title && (
                 <h5 className="field-title title">
                     {props.title}
+                    {!props.readonly && !isEdited && (
+                        <div className="field-buttons d-inline-block">
+                            {!props.alwaysEdited &&
+                                <button
+                                    className={classNames("reset-button")}
+                                    title={'Редактировать'}
+                                    onClick={toggleIsEdit}
+                                >
+                                    <EditIcon size={18} />
+                                </button>
+                            }
+                        </div>
+                    )}
                 </h5>
             )}
             <div className="field-content">
@@ -138,16 +151,13 @@ const Field = (props) => {
                             <CheckIcon size={24} />
                         </button>
                     )}
-                    {!props.alwaysEdited &&
+                    {!props.alwaysEdited && isEdited &&
                         <button
-                            className={classNames("reset-button", {
-                                'text-hover-danger': isEdited
-                            })}
-                            title={isEdited ? 'Отменить' : 'Редактировать'}
+                            className={classNames("reset-button text-hover-danger")}
+                            title={'Отменить'}
                             onClick={toggleIsEdit}
                         >
-                            {isEdited ? <CloseIcon size={24} /> :
-                                <EditIcon size={18} />}
+                            <CloseIcon size={24} />
                         </button>
                     }
                 </div>

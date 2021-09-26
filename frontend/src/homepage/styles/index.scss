@@ -80,3 +80,37 @@
         }
     }
 }
+
+.contacts {
+    list-style: none;
+    padding-left: 0;
+
+    a {
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+
+        span {
+            display: inline-block;
+            margin-left: $spacer / 2;
+            color: $red-500;
+            text-decoration: underline;
+        }
+
+        svg {
+            width: 18px;
+            fill: $red-500;
+        }
+
+        &:hover {
+            span {
+                text-decoration: none;
+                color: $red-400;
+            }
+
+            svg {
+                fill: $red-400;
+            }
+        }
+    }
+}

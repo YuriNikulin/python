@@ -1,0 +1,10 @@
+<div class="mb-4 mt-4 d-flex align-items-center border-bottom">
+    <h3 class="title text-center">
+        {{ current_application.name }}
+    </h3>
+    {% for source in current_application.sources %}
+        <div class="ms-3">
+            {% include "source-link.html" %}
+        </div>
+    {% endfor %}
+</div>

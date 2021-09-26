@@ -10,11 +10,7 @@
     {% csrf_token %}
     <div class="" id="task-manager">
         <div class="container">
-            <div class="row mb-4">
-                <h3 class="title text-center">
-                    Таск-трекер
-                </h3>
-            </div>
+            {% include "app-title.html" %}
         </div>
         <div id="tm-app">
         </div>

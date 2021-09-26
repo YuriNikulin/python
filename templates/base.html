@@ -6,8 +6,6 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     {% load static %}
-    {% comment %} <link rel="stylesheet" href="{% static 'common/styles/reset.css' %}" />
-    <link rel="stylesheet" href="{% static 'common/styles/base.css' %}" /> {% endcomment %}
     {% block head %} {% endblock %}
     <title>{% block title %} {% endblock %}</title>
     {% include "preloader-script.html" %}
@@ -16,6 +14,7 @@
     <div class="main-preloader" style="opacity: 1; transition: .3s ease-in-out opacity; display: none;">
         {% include "preloader.html" %}
     </div>
+
     <div class="main-wrapper  {% block main_wrapper_classname %}{% endblock %}" style="display: none;">
         <header class="header py-3">
             <div class="container">
@@ -33,7 +32,7 @@
                                         <li class="nav-item">
                                             <a
                                                 href="{% url app.app_name %}"
-                                                class="nav-link {% if app.path in request.path %}active{%endif%}"
+                                                class="nav-link {% if current_application and current_application.id == app.id %}active{%endif%}"
                                             >
                                                 {{ app.name }}  
                                             </a>
