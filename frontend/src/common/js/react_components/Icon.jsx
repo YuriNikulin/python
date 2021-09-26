@@ -2,7 +2,7 @@ import React from 'react'
 
 const Icon = (props) => {
     return (
-        <span className="icon" style={{ width: props.size, height: props.size }}>
+        <span className={`icon ${props.className || ''}`} style={{ width: props.size, height: props.size }}>
             {props.children}
         </span>
     )
@@ -44,6 +44,26 @@ export const ChevronUpIcon = () => (
         </svg>
     </Icon>
 )
+
+export const ChevronLeftIcon = () => (
+    <Icon>
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            className="feather feather-chevron-left"
+            viewBox="0 0 24 24"
+        >
+            <path d="M15 18L9 12 15 6"></path>
+        </svg>
+    </Icon>
+)
+
 
 export const FilterIcon = (props) => (
     <Icon {...props}>
@@ -143,4 +163,71 @@ export const CloseIcon = (props) => (
         </svg>
     </Icon>
 )
+
+export const LinkIcon = (props) => {
+    return (
+        <Icon {...props}>
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="none"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                className="feather feather-external-link"
+                viewBox="0 0 24 24"
+            >
+                <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
+                <path d="M15 3L21 3 21 9"></path>
+                <path d="M10 14L21 3"></path>
+            </svg>
+        </Icon>
+    )
+}
+
+export const CheckIcon = (props) => {
+    return (
+        <Icon {...props}>
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="none"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                className="feather feather-check"
+                viewBox="0 0 24 24"
+            >
+                <path d="M20 6L9 17 4 12"></path>
+            </svg>
+        </Icon>
+    )
+}
+
+export const UserIcon = (props) => {
+    return (
+        <Icon {...props}>
+
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="none"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                className="feather feather-user"
+                viewBox="0 0 24 24"
+            >
+                <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+        </Icon>
+    )
+}
 

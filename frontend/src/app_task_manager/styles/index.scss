@@ -1,0 +1,185 @@
+@import '../../common/styles/variables.scss';
+
+.filter {
+    display: flex;
+}
+
+.badge {
+    & + & {
+        margin-left: $spacer / 2;
+    }
+}
+
+.list {
+    .card-body {
+        & > div {
+            border-bottom: 1px solid $border-color;
+            display: flex;
+            padding: $spacer / 2 0;
+
+            &:last-child {
+                border-bottom: none;
+                padding-bottom: 0;
+            } 
+
+            p, h6 {
+                margin-bottom: 0;
+            }
+
+            h6 {
+                line-height: $line-height-base;
+                width: 150px;
+                flex-shrink: 0;
+            }
+
+            p {
+                margin-left: $spacer;
+                flex-grow: 1;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 2;
+            }
+        }
+    }
+}
+
+.details {
+    &-divider {
+        height: 1px;
+        border-bottom: 1px solid $border-color;
+        margin-bottom: $spacer * 2;
+        width: 100%;
+    }
+
+    &-items {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+    }
+
+    &-footer {
+        box-shadow: 0px -2px 4px rgba(0,0,0,.1);
+        padding: $spacer 0;
+        position: sticky;
+        bottom: 0;
+        background: #fff;
+        display: flex;
+
+        .container {
+            display: flex;
+        }
+
+        .divider {
+            height: 100%;
+            width: 1px;
+            background: $border-color;
+            margin: 0 $spacer * 2;
+        }
+    }
+
+    .field {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-bottom: $spacer * 2;
+        width: 50%;
+
+        p {
+            margin-bottom: 0;
+        }
+
+        &-title {
+            width: 100%;
+        }
+
+        &-buttons {
+            margin-left: $spacer / 2;
+            opacity: 0;
+            transition: opacity .3s ease-in-out;
+            flex-shrink: 0;
+
+            button {
+                width: 30px;
+                color: $gray-600;
+
+                &:hover {
+                    color: $primary;
+                }
+            }
+        }
+
+        &.editable {
+            cursor: pointer;
+        }
+
+        &.edited, &:hover {
+            .field-buttons {
+                opacity: 1;
+            }
+        }
+
+        &.fullWidth {
+            width: 100%;
+            margin-left: 0;
+        }
+
+        &:not(.fullWidth) {
+            &:nth-child(2n + 2) {
+                padding-right: $spacer / 2;
+            }
+
+            &:nth-child(2n + 1) {
+                padding-left: $spacer / 2;
+            }
+        }
+
+        .field-content {
+            flex-grow: 1;
+        }
+
+        &.edited {
+            .field-content {
+                // width: 600px
+            }
+        }
+    }
+}
+
+.profile {
+    cursor: pointer;
+
+    &, &-button {
+        display: flex;
+        align-items: center;
+    }
+    
+    &-name {
+        max-width: 130px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        margin-right: $spacer / 2;
+    }
+
+    &-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: $gray-300;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &:hover {
+        .profile-icon {
+            background: $primary;
+            color: #fff;
+        }
+
+        .profile-name {
+            color: $primary;
+        }
+    }
+}

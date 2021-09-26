@@ -12,7 +12,7 @@ const stickyHeader = () => {
     }
   };
 
-  document.addEventListener('scroll', throttle(checkScroll, 300));
+  document.addEventListener('scroll', throttle(checkScroll, 200));
 };
 
 stickyHeader();

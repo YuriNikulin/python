@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+    
+{% endblock %}
+{% block title %}Таск-трекер{% endblock %}
+
+{% block content %}
+    {% csrf_token %}
+    <div class="" id="task-manager">
+        <div class="container">
+            <div class="row mb-4">
+                <h3 class="title text-center">
+                    Таск-трекер
+                </h3>
+            </div>
+        </div>
+        <div id="tm-app">
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts%}
+    <script src="{% static 'app_task_manager/js/index.js' %}"></script>
+{% endblock %}

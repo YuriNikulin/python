@@ -149,8 +149,9 @@ def add_column(request):
 
 def create_document(request):
     try:
-        [user, *rest] = get_user_and_document(request)
+        [user, *rest] = get_user_and_document(request, allow_empty_document=True)
         res = csv_app.create_document()
+
         user.current_document = generate_json_to_save_in_db(res)
         user.save()
         return JsonResponse({})

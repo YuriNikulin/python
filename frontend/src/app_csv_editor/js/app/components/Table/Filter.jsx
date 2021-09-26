@@ -59,6 +59,7 @@ const Filter = (props) => {
         <Menu
             portal={true}
             buttonRef={buttonRef}
+            fullWidth={false}
             menuButton={(
                 <button
                     title="Отфильтровать"

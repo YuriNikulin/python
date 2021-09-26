@@ -45,10 +45,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework'
 ]
+
+REST_FRAMEWORK = {
+    'EXCEPTION_HANDLER': 'ynp_app.utils.custom_exception_handler'
+}
 
 
 ROOT_URLCONF = 'ynp.urls'
+
 
 TEMPLATES = [
     {

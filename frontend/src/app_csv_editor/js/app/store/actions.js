@@ -71,7 +71,8 @@ export const importFile = (file) => async (state, dispatch) => {
             method: 'POST',
             body: formData,
             useStringifyBody: false,
-            showErrorNotification: true
+            showErrorNotification: true,
+            shouldSetContentType: false
         })
 
         dispatch({
@@ -319,9 +320,15 @@ export const exportDocument = (type) => async (state, dispatch) => {
             })
           );
         document.body.removeChild(link);
+        dispatch({
+            type: TYPES.EXPORT_DOCUMENT_SUCCESS
+        })
 
     } catch(e) {
         console.log(e)
+        dispatch({
+            type: TYPES.EXPORT_DOCUMENT_ERROR
+        })
     }
 
 }
