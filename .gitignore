@@ -1,6 +1,7 @@
 venv/
 *.txt
 !requirements.txt
+!**/media/*.txt
 
 # Created by https://www.gitignore.io
 
