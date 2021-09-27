@@ -9,6 +9,19 @@ export const METHODS = {
 const makeRequest = async (url, params) => {
     const csrfToken = Cookies.get('csrftoken');
     let response;
+    let abortController
+    if (params.expiresAfter) {
+        abortController = new AbortController()
+        setTimeout(() => {
+            if (!response) {
+                abortController.abort()
+                if (params.expirationMessage) {
+                    showNotification(params.expirationMessage);
+                }
+            }
+        }, params.expiresAfter)
+    }
+
     return new Promise(async (resolve, reject) => {
         try {
             let _url = url;
@@ -33,6 +46,7 @@ const makeRequest = async (url, params) => {
                 headers,
                 body: method !== METHODS.GET ? body : undefined,
                 method,
+                signal: abortController.signal
             });
             if (!params.returnRawResponse) {
                 response = await res.json();
