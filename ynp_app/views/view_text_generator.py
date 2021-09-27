@@ -6,7 +6,6 @@ from ynp_app.applications.text_generator import main
 from codecs import EncodedFile
 from datetime import datetime
 import pathlib
-import multiprocessing
 
 file_max_size_kb = 200
 
@@ -47,7 +46,6 @@ def generate(request):
             if file_size > file_max_size_kb:
                 raise ValueError(f'Слишком большой файл. Макс. размер файла - {file_max_size_kb}кб.')
             text_string = file.read().decode()
-            # breakpoint()
         elif generate_type == 'text':
             text_string = json.loads(request.body.decode()).get('text')
         else:
@@ -57,32 +55,7 @@ def generate(request):
             with open(f'{example_filename}', 'r') as file:
                 text_string = file.read()
 
-        shared_var = {}
-
-        def worker(queue):
-            shared = queue.get()
-            try:
-                shared['result'] = main(text=text_string, sequences_count=int(request.GET.get('sequencesCount', 10)))
-                queue.put(shared)
-            except Exception as error:
-                shared['error'] = str(error)
-                queue.put(shared)
-
-        queue = multiprocessing.Queue()
-        queue.put(shared_var)
-
-        __p = multiprocessing.Process(target=worker, args=(queue,))
-        __p.start()
-        __p.join(5)
-        if __p.is_alive():
-            __p.terminate()
-            __p.join()
-            raise ValueError('Произошла ошибка при генерации текста. Скорее всего, ваш текст слишком маленький.')
-
-        queue_state = queue.get()
-        if (__p.exitcode != 0 or 'error' in queue_state):
-            raise ValueError(queue_state.get('error', ''))
-        result = queue_state.get('result')
+        result = main(text=text_string, sequences_count=int(request.GET.get('sequencesCount', 10)))
         return JsonResponse({
             "result": result
         })
