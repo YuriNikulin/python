@@ -21,10 +21,11 @@
         var preloader = document.querySelector('.main-preloader')
         mainWrapper.style.display = 'block'
         mainWrapper.classList.add('shown')
+        document.body.classList.add('loaded')
         preloader.style.opacity = 0;
         isLoaded = true
         setTimeout(() => {
-            preloader.parentElement.removeChild(preloader)
+            preloader.style.display = 'none'
         }, 300)
     }
 
