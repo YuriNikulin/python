@@ -19,7 +19,7 @@ applications_list = [
                     },
                     {
                         "name": "View",
-                        "url": "https://github.com/YuriNikulin/python/blob/master/ynp_app/controllers/controller_calculator.py"
+                        "url": "https://github.com/YuriNikulin/python/blob/master/ynp_app/views/view_calculator.py"
                     }
                 ]
             },
@@ -44,7 +44,7 @@ applications_list = [
                     },
                     {
                         "name": "View",
-                        "url": "https://github.com/YuriNikulin/python/blob/master/ynp_app/controllers/controller_text_generator.py"
+                        "url": "https://github.com/YuriNikulin/python/blob/master/ynp_app/views/view_text_generator.py"
                     }
                 ]
             },
@@ -62,7 +62,7 @@ applications_list = [
                     },
                     {
                         "name": "View",
-                        "url": "https://github.com/YuriNikulin/python/blob/master/ynp_app/controllers/controller_csv_editor.py"
+                        "url": "https://github.com/YuriNikulin/python/blob/master/ynp_app/views/view_csv_editor.py"
                     }
                 ],
                 "bg_img_src": 'homepage/img/app_csv_editor.jpg',
@@ -81,7 +81,7 @@ applications_list = [
                 "sources": [
                     {
                         "name": "View",
-                        "url": "https://github.com/YuriNikulin/python/blob/master/ynp_app/controllers/controller_task_manager.py"
+                        "url": "https://github.com/YuriNikulin/python/blob/master/ynp_app/views/view_task_manager.py"
                     }
                 ],
                 "technologies": [
