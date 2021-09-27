@@ -50,6 +50,7 @@ const handleSubmit = async () => {
                 exampleId: type !== 'example' ? undefined : example,
             },
             showErrorNotification: true,
+            shouldSetContentType: false,
             expiresAfter: 1000,
             expirationMessage: {
                 title: 'Ошибка',
