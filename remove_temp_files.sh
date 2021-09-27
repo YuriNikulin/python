@@ -1,0 +1,1 @@
+rm ./ynp_app/applications/temp/*

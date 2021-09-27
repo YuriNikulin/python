@@ -173,7 +173,6 @@ def export(request):
             format=request.GET.get('format')
         )
         file = open(filename, 'rb')
-        os_remove(filename)
 
         return FileResponse(file)
     except Exception as e:

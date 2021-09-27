@@ -1,5 +1,5 @@
 import pandas as pd
-from os import path
+from os import path, mkdir
 import re
 from datetime import datetime
 
@@ -159,14 +159,17 @@ def export(user_document, format='csv', filters=[], sort={}, columns=None):
     df = get_data(user_document, filters=filters, sort=sort, columns=columns, return_df=True)
     result = None
     ts = datetime.now().strftime("%d_%m_%Y_%H_%M")
+    filename_prefix = path.dirname(__file__) + '/temp'
+    if not path.exists(filename_prefix):
+        mkdir(filename_prefix)
 
     if format == 'csv':
-        filename = f'./temp/{ts}.csv'
+        filename = f'{filename_prefix}/{ts}.csv'
         result = df.to_csv(index=False)
         f = open(filename, 'w')
         f.write(result)
         f.close()
     else:
-        filename = f'./temp/{ts}.xlsx'
+        filename = f'{filename_prefix}/{ts}.xlsx'
         df.to_excel(excel_writer=filename, index=False)
     return filename
