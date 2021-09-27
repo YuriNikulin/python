@@ -35,10 +35,11 @@
             p {
                 margin-left: $spacer;
                 flex-grow: 1;
-                white-space: nowrap;
                 text-overflow: ellipsis;
+                display: -webkit-box;
                 -webkit-box-orient: vertical;
                 -webkit-line-clamp: 2;
+                overflow: hidden;
             }
         }
     }
