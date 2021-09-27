@@ -161,12 +161,12 @@ def export(user_document, format='csv', filters=[], sort={}, columns=None):
     ts = datetime.now().strftime("%d_%m_%Y_%H_%M")
 
     if format == 'csv':
-        filename = f'{ts}.csv'
+        filename = f'./temp/{ts}.csv'
         result = df.to_csv(index=False)
         f = open(filename, 'w')
         f.write(result)
         f.close()
     else:
-        filename = f'{ts}.xlsx'
+        filename = f'./temp/{ts}.xlsx'
         df.to_excel(excel_writer=filename, index=False)
     return filename

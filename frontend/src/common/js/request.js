@@ -46,7 +46,7 @@ const makeRequest = async (url, params) => {
                 headers,
                 body: method !== METHODS.GET ? body : undefined,
                 method,
-                signal: abortController.signal
+                signal: abortController?.signal
             });
             if (!params.returnRawResponse) {
                 response = await res.json();

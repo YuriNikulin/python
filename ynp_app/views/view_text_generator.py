@@ -46,7 +46,6 @@ def generate(request):
             if file_size > file_max_size_kb:
                 raise ValueError(f'Слишком большой файл. Макс. размер файла - {file_max_size_kb}кб.')
             text_string = file.read().decode()
-            # breakpoint()
         elif generate_type == 'text':
             text_string = json.loads(request.body.decode()).get('text')
         else:
@@ -57,9 +56,6 @@ def generate(request):
                 text_string = file.read()
 
         result = main(text=text_string, sequences_count=int(request.GET.get('sequencesCount', 10)))
-        return JsonResponse({
-            "result": result
-        })
         return JsonResponse({
             "result": result
         })
