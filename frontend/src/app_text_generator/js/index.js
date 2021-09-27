@@ -1,5 +1,6 @@
 import tab from 'bootstrap/js/src/tab';
 import makeRequest, { METHODS } from 'common/request';
+import { mainPreloaderToggle } from '../../common/js/utils';
 
 const wrapper = document.getElementById('text-generator');
 const fileInput = wrapper.querySelector('#tg-input-file');
@@ -40,6 +41,7 @@ const handleSubmit = async () => {
     }
 
     try {
+        mainPreloaderToggle(true)
         const res = await makeRequest(endpoint, {
             body,
             useStringifyBody: type !== 'file',
@@ -51,7 +53,7 @@ const handleSubmit = async () => {
             },
             showErrorNotification: true,
             shouldSetContentType: false,
-            expiresAfter: 1000,
+            expiresAfter: 7000,
             expirationMessage: {
                 title: 'Ошибка',
                 text: 'Произошла ошибка при генерации текста. Скорее всего, ваш текст слишком маленький'
@@ -60,6 +62,8 @@ const handleSubmit = async () => {
         resultEl.textContent = res.result;
     } catch (e) {
         console.error(e);
+    } finally {
+        mainPreloaderToggle(false)
     }
 };
 
